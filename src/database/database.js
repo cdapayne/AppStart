@@ -373,23 +373,33 @@ class AppDatabase {
   }
 
   // ==================== Helper Methods ====================
+  _safeJsonParse(str, defaultValue = null) {
+    if (!str) return defaultValue;
+    try {
+      return JSON.parse(str);
+    } catch (e) {
+      console.error('Failed to parse JSON:', e.message);
+      return defaultValue;
+    }
+  }
+
   _mapProjectRow(row) {
     return {
       id: row.id,
       name: row.name,
       description: row.description,
       status: row.status,
-      targetMarkets: JSON.parse(row.target_markets || '[]'),
+      targetMarkets: this._safeJsonParse(row.target_markets, []),
       ageRangeMin: row.age_range_min,
       ageRangeMax: row.age_range_max,
       category: row.category,
       subcategory: row.subcategory,
       monetization: row.monetization,
       appDescription: row.app_description,
-      aiPlan: row.ai_plan ? JSON.parse(row.ai_plan) : null,
+      aiPlan: this._safeJsonParse(row.ai_plan, null),
       agentInstructions: row.agent_instructions,
-      checklist: row.checklist ? JSON.parse(row.checklist) : null,
-      adjustments: row.adjustments ? JSON.parse(row.adjustments) : null,
+      checklist: this._safeJsonParse(row.checklist, null),
+      adjustments: this._safeJsonParse(row.adjustments, null),
       currentStep: row.current_step,
       createdAt: row.created_at,
       updatedAt: row.updated_at,
@@ -411,11 +421,11 @@ class AppDatabase {
       supportUrl: row.support_url,
       marketingUrl: row.marketing_url,
       iconPath: row.icon_path,
-      screenshots: row.screenshots ? JSON.parse(row.screenshots) : [],
+      screenshots: this._safeJsonParse(row.screenshots, []),
       promoVideoPath: row.promo_video_path,
       featureGraphicPath: row.feature_graphic_path,
       status: row.status,
-      metadata: row.metadata ? JSON.parse(row.metadata) : null,
+      metadata: this._safeJsonParse(row.metadata, null),
       createdAt: row.created_at,
       updatedAt: row.updated_at,
     };

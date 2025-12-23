@@ -5,6 +5,9 @@ node_modules/
 dist/
 out/
 
+# Compiled CSS (generated from Tailwind)
+src/renderer/styles/output.css
+
 # OS files
 .DS_Store
 Thumbs.db

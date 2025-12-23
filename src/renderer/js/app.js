@@ -1658,7 +1658,7 @@ async function generateStoreTaglines() {
             (taglines.mainTaglines || []).map(function(t, i) {
               return '<div class="flex items-center justify-between p-2 bg-surface-700 rounded">' +
                 '<span>' + escapeHtml(t) + '</span>' +
-                '<button onclick="useTagline(\'' + escapeHtml(t).replace(/'/g, "\\'") + '\')" class="btn-ghost text-sm">Use</button>' +
+                '<button onclick="useTagline(\'' + escapeJsString(t) + '\')" class="btn-ghost text-sm">Use</button>' +
               '</div>';
             }).join('') +
           '</div>' +
@@ -1669,7 +1669,7 @@ async function generateStoreTaglines() {
             (taglines.subtitles || []).map(function(t, i) {
               return '<div class="flex items-center justify-between p-2 bg-surface-700 rounded">' +
                 '<span>' + escapeHtml(t) + '</span>' +
-                '<button onclick="useTagline(\'' + escapeHtml(t).replace(/'/g, "\\'") + '\')" class="btn-ghost text-sm">Use</button>' +
+                '<button onclick="useTagline(\'' + escapeJsString(t) + '\')" class="btn-ghost text-sm">Use</button>' +
               '</div>';
             }).join('') +
           '</div>' +
@@ -2135,6 +2135,17 @@ function escapeHtml(text) {
   var div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
+}
+
+function escapeJsString(text) {
+  if (!text) return '';
+  return text
+    .replace(/\\/g, '\\\\')
+    .replace(/'/g, "\\'")
+    .replace(/"/g, '\\"')
+    .replace(/\n/g, '\\n')
+    .replace(/\r/g, '\\r')
+    .replace(/\t/g, '\\t');
 }
 
 function formatDate(dateStr) {
