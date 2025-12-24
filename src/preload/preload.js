@@ -34,12 +34,22 @@ contextBridge.exposeInMainWorld('electronAPI', {
   generateStoreContent: (projectData, storeType) => ipcRenderer.invoke('openai:generateStoreContent', projectData, storeType),
   generateKeywords: (projectData) => ipcRenderer.invoke('openai:generateKeywords', projectData),
   generateTaglines: (projectData) => ipcRenderer.invoke('openai:generateTaglines', projectData),
+  generatePitch: (projectData) => ipcRenderer.invoke('openai:generatePitch', projectData),
+  translateContent: (content, targetLanguage, targetRegion) => ipcRenderer.invoke('openai:translateContent', content, targetLanguage, targetRegion),
 
   // File Operations
   selectImage: () => ipcRenderer.invoke('file:selectImage'),
   selectMultipleImages: () => ipcRenderer.invoke('file:selectMultipleImages'),
   selectVideo: () => ipcRenderer.invoke('file:selectVideo'),
   selectDirectory: () => ipcRenderer.invoke('file:selectDirectory'),
+  saveFile: (filename, content) => ipcRenderer.invoke('file:saveFile', filename, content),
+  saveFileHtml: (filename, content) => ipcRenderer.invoke('file:saveFileHtml', filename, content),
+  openFile: (filePath) => ipcRenderer.invoke('file:openFile', filePath),
+
+  // Image Processing
+  processIcon: (sourcePath, outputDir, storeType, appName) => ipcRenderer.invoke('image:processIcon', sourcePath, outputDir, storeType, appName),
+  processScreenshots: (sourcePaths, outputDir, storeType, appName, screenshotType) => ipcRenderer.invoke('image:processScreenshots', sourcePaths, outputDir, storeType, appName, screenshotType),
+  selectOutputDirectory: () => ipcRenderer.invoke('image:selectOutputDirectory'),
 
   // Window Controls
   minimizeWindow: () => ipcRenderer.invoke('window:minimize'),
@@ -49,4 +59,20 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // App Info
   getVersion: () => ipcRenderer.invoke('app:getVersion'),
   getPlatform: () => ipcRenderer.invoke('app:getPlatform'),
+
+  // Event listeners for streaming
+  on: (channel, callback) => {
+    const validChannels = ['openai:plan-chunk', 'openai:plan-finished', 'openai:plan-error'];
+    if (validChannels.includes(channel)) {
+      // Deliberately strip event as it includes `sender`
+      const subscription = (event, ...args) => callback(...args);
+      ipcRenderer.on(channel, subscription);
+      return () => {
+        ipcRenderer.removeListener(channel, subscription);
+      };
+    }
+  },
+  removeListener: (channel, callback) => {
+    ipcRenderer.removeListener(channel, callback);
+  },
 });

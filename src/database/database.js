@@ -55,10 +55,18 @@ class AppDatabase {
         checklist TEXT,
         adjustments TEXT,
         current_step TEXT DEFAULT 'planning',
+        icon_path TEXT,
         created_at TEXT DEFAULT CURRENT_TIMESTAMP,
         updated_at TEXT DEFAULT CURRENT_TIMESTAMP
       )
     `);
+
+    // Migration: Add icon_path column if it doesn't exist
+    try {
+      this.db.exec(`ALTER TABLE projects ADD COLUMN icon_path TEXT`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
 
     // Create store_submissions table
     this.db.exec(`
@@ -77,6 +85,8 @@ class AppDatabase {
         marketing_url TEXT,
         icon_path TEXT,
         screenshots TEXT,
+        phone_screenshots TEXT,
+        tablet_screenshots TEXT,
         promo_video_path TEXT,
         feature_graphic_path TEXT,
         status TEXT DEFAULT 'draft',
@@ -86,6 +96,46 @@ class AppDatabase {
         FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
       )
     `);
+
+    // Migration: Add phone_screenshots and tablet_screenshots columns
+    try {
+      this.db.exec(`ALTER TABLE store_submissions ADD COLUMN phone_screenshots TEXT`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+    try {
+      this.db.exec(`ALTER TABLE store_submissions ADD COLUMN tablet_screenshots TEXT`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+
+    // Migration: Add marketing_data column for storing marketing checklist and budget settings
+    try {
+      this.db.exec(`ALTER TABLE projects ADD COLUMN marketing_data TEXT`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+
+    // Migration: Add live_store_url column for approved/published apps
+    try {
+      this.db.exec(`ALTER TABLE store_submissions ADD COLUMN live_store_url TEXT`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+
+    // Migration: Add translations column for localized store listings
+    try {
+      this.db.exec(`ALTER TABLE store_submissions ADD COLUMN translations TEXT`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+
+    // Migration: Add pitch column for Shark Tank/TED Talk style pitch
+    try {
+      this.db.exec(`ALTER TABLE projects ADD COLUMN pitch TEXT`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
 
     // Insert default settings if not exists
     const settingsExist = this.db.prepare('SELECT COUNT(*) as count FROM settings').get();
@@ -178,7 +228,7 @@ class AppDatabase {
   // ==================== Projects ====================
   getAllProjects() {
     const rows = this.db.prepare('SELECT * FROM projects ORDER BY updated_at DESC').all();
-    return rows.map(this._mapProjectRow);
+    return rows.map(row => this._mapProjectRow(row));
   }
 
   getProject(id) {
@@ -233,6 +283,9 @@ class AppDatabase {
       checklist: 'checklist',
       adjustments: 'adjustments',
       currentStep: 'current_step',
+      iconPath: 'icon_path',
+      marketingData: 'marketing_data',
+      pitch: 'pitch',
     };
 
     for (const [jsKey, dbKey] of Object.entries(fieldMap)) {
@@ -307,7 +360,7 @@ class AppDatabase {
     const rows = this.db.prepare(
       'SELECT * FROM store_submissions WHERE project_id = ? ORDER BY created_at'
     ).all(projectId);
-    return rows.map(this._mapStoreSubmissionRow);
+    return rows.map(row => this._mapStoreSubmissionRow(row));
   }
 
   createStoreSubmission(projectId, storeType) {
@@ -339,10 +392,14 @@ class AppDatabase {
       marketingUrl: 'marketing_url',
       iconPath: 'icon_path',
       screenshots: 'screenshots',
+      phoneScreenshots: 'phone_screenshots',
+      tabletScreenshots: 'tablet_screenshots',
       promoVideoPath: 'promo_video_path',
       featureGraphicPath: 'feature_graphic_path',
       status: 'status',
       metadata: 'metadata',
+      liveStoreUrl: 'live_store_url',
+      translations: 'translations',
     };
 
     for (const [jsKey, dbKey] of Object.entries(fieldMap)) {
@@ -401,6 +458,9 @@ class AppDatabase {
       checklist: this._safeJsonParse(row.checklist, null),
       adjustments: this._safeJsonParse(row.adjustments, null),
       currentStep: row.current_step,
+      iconPath: row.icon_path,
+      marketingData: this._safeJsonParse(row.marketing_data, null),
+      pitch: this._safeJsonParse(row.pitch, null),
       createdAt: row.created_at,
       updatedAt: row.updated_at,
     };
@@ -422,10 +482,14 @@ class AppDatabase {
       marketingUrl: row.marketing_url,
       iconPath: row.icon_path,
       screenshots: this._safeJsonParse(row.screenshots, []),
+      phoneScreenshots: this._safeJsonParse(row.phone_screenshots, []),
+      tabletScreenshots: this._safeJsonParse(row.tablet_screenshots, []),
       promoVideoPath: row.promo_video_path,
       featureGraphicPath: row.feature_graphic_path,
       status: row.status,
       metadata: this._safeJsonParse(row.metadata, null),
+      liveStoreUrl: row.live_store_url,
+      translations: this._safeJsonParse(row.translations, {}),
       createdAt: row.created_at,
       updatedAt: row.updated_at,
     };

@@ -491,6 +491,70 @@ const StoreRequirements = {
       description: { max: 20000 },
       tags: { max: 20 },
     }
+  },
+
+  'meta-quest': {
+    name: 'Meta Quest Store',
+    icon: {
+      name: 'App Icon',
+      sizes: [
+        { width: 1024, height: 1024, name: 'Store Icon', required: true },
+        { width: 512, height: 512, name: 'Square Icon', required: true },
+        { width: 256, height: 256, name: 'Small Icon', required: false },
+      ],
+      format: ['PNG'],
+      notes: 'Square format, no rounded corners'
+    },
+    coverArt: {
+      name: 'Cover Art (Landscape)',
+      size: { width: 2560, height: 1440 },
+      format: ['PNG', 'JPEG'],
+      required: true,
+      notes: 'Main promotional image shown in store'
+    },
+    heroArt: {
+      name: 'Hero Art',
+      size: { width: 3000, height: 900 },
+      format: ['PNG', 'JPEG'],
+      required: true,
+      notes: 'Wide banner image for featured placements'
+    },
+    screenshots: {
+      sizes: [
+        { 
+          width: 2560, height: 1440, 
+          name: 'Quest Screenshot (16:9)', 
+          required: true 
+        },
+        { 
+          width: 1920, height: 1080, 
+          name: 'Quest Screenshot (HD)', 
+          required: false 
+        },
+      ],
+      count: { min: 3, max: 10 },
+      format: ['PNG', 'JPEG'],
+      notes: 'Must be actual in-VR screenshots showing gameplay. At least 3 required.'
+    },
+    video: {
+      name: 'Trailer',
+      specs: [
+        { width: 2560, height: 1440, name: '2K (recommended)' },
+        { width: 1920, height: 1080, name: 'Full HD' },
+      ],
+      duration: { min: 30, max: 180 },
+      format: ['MP4'],
+      required: true,
+      notes: 'Video trailer is required. Show actual VR gameplay footage.'
+    },
+    metadata: {
+      appName: { max: 50 },
+      shortDescription: { max: 500 },
+      description: { max: 4000 },
+      comfortRating: ['Comfortable', 'Moderate', 'Intense'],
+      playArea: ['Seated', 'Standing', 'Roomscale'],
+      inputMethods: ['Touch Controllers', 'Hand Tracking', 'Gamepad'],
+    }
   }
 };
 

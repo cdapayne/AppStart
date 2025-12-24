@@ -28,6 +28,23 @@ function createWindow() {
     icon: path.join(__dirname, '../assets/icon.png')
   });
 
+  // Set Content Security Policy to allow Google Fonts
+  mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+        'Content-Security-Policy': [
+          "default-src 'self'; " +
+          "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+          "font-src 'self' https://fonts.gstatic.com; " +
+          "script-src 'self' 'unsafe-inline'; " +
+          "img-src 'self' data: https:; " +
+          "connect-src 'self' https://api.openai.com https://platform.openai.com"
+        ]
+      }
+    });
+  });
+
   // Load the index.html
   mainWindow.loadFile(path.join(__dirname, '../renderer/index.html'));
 
@@ -61,10 +78,21 @@ async function initialize() {
   // Initialize OpenAI service (will be configured when API key is set)
   openaiService = new OpenAIService();
   
-  // Load API key from settings if available
+  // Load settings and configure OpenAI service
   const settings = database.getSettings();
-  if (settings && settings.openaiApiKey) {
-    openaiService.setApiKey(settings.openaiApiKey);
+  if (settings) {
+    if (settings.openaiApiKey) {
+      openaiService.setApiKey(settings.openaiApiKey);
+    }
+    if (settings.aiModel) {
+      openaiService.setModel(settings.aiModel);
+    }
+    if (settings.reasoningEffort) {
+      openaiService.setReasoningEffort(settings.reasoningEffort);
+    }
+    if (settings.outputVerbosity) {
+      openaiService.setOutputVerbosity(settings.outputVerbosity);
+    }
   }
 }
 
@@ -102,9 +130,18 @@ ipcMain.handle('settings:get', () => {
 ipcMain.handle('settings:update', (event, settings) => {
   const result = database.updateSettings(settings);
   
-  // Update OpenAI service if API key changed
+  // Update OpenAI service with new settings
   if (settings.openaiApiKey !== undefined) {
     openaiService.setApiKey(settings.openaiApiKey);
+  }
+  if (settings.aiModel !== undefined) {
+    openaiService.setModel(settings.aiModel);
+  }
+  if (settings.reasoningEffort !== undefined) {
+    openaiService.setReasoningEffort(settings.reasoningEffort);
+  }
+  if (settings.outputVerbosity !== undefined) {
+    openaiService.setOutputVerbosity(settings.outputVerbosity);
   }
   
   return result;
@@ -184,7 +221,8 @@ ipcMain.handle('openai:generatePlan', async (event, projectData) => {
     throw new Error('OpenAI API key not configured. Please set it in Settings.');
   }
   
-  return await openaiService.generateAppPlan(projectData);
+  const webContents = event.sender;
+  return await openaiService.generateAppPlan(projectData, webContents);
 });
 
 ipcMain.handle('openai:generateAdjustments', async (event, projectData, adjustmentRequest) => {
@@ -221,6 +259,24 @@ ipcMain.handle('openai:generateTaglines', async (event, projectData) => {
   }
   
   return await openaiService.generateTaglines(projectData);
+});
+
+ipcMain.handle('openai:generatePitch', async (event, projectData) => {
+  const settings = database.getSettings();
+  if (!settings.openaiApiKey) {
+    throw new Error('OpenAI API key not configured. Please set it in Settings.');
+  }
+  
+  return await openaiService.generatePitch(projectData);
+});
+
+ipcMain.handle('openai:translateContent', async (event, content, targetLanguage, targetRegion) => {
+  const settings = database.getSettings();
+  if (!settings.openaiApiKey) {
+    throw new Error('OpenAI API key not configured. Please set it in Settings.');
+  }
+  
+  return await openaiService.translateContent(content, targetLanguage, targetRegion);
 });
 
 // --- File Operations ---
@@ -269,6 +325,195 @@ ipcMain.handle('file:selectVideo', async () => {
 ipcMain.handle('file:selectDirectory', async () => {
   const result = await dialog.showOpenDialog(mainWindow, {
     properties: ['openDirectory']
+  });
+  
+  if (!result.canceled && result.filePaths.length > 0) {
+    return result.filePaths[0];
+  }
+  return null;
+});
+
+ipcMain.handle('file:saveFile', async (event, filename, content) => {
+  const result = await dialog.showSaveDialog(mainWindow, {
+    defaultPath: filename,
+    filters: [
+      { name: 'Markdown', extensions: ['md'] },
+      { name: 'Text', extensions: ['txt'] },
+      { name: 'All Files', extensions: ['*'] }
+    ]
+  });
+  
+  if (!result.canceled && result.filePath) {
+    const fs = require('fs');
+    fs.writeFileSync(result.filePath, content, 'utf-8');
+    return result.filePath;
+  }
+  return null;
+});
+
+ipcMain.handle('file:saveFileHtml', async (event, filename, content) => {
+  const result = await dialog.showSaveDialog(mainWindow, {
+    defaultPath: filename,
+    filters: [
+      { name: 'HTML', extensions: ['html'] },
+      { name: 'All Files', extensions: ['*'] }
+    ]
+  });
+  
+  if (!result.canceled && result.filePath) {
+    const fs = require('fs');
+    fs.writeFileSync(result.filePath, content, 'utf-8');
+    return result.filePath;
+  }
+  return null;
+});
+
+ipcMain.handle('file:openFile', async (event, filePath) => {
+  const { shell } = require('electron');
+  return shell.openExternal('file://' + filePath);
+});
+
+// --- Image Processing ---
+ipcMain.handle('image:processIcon', async (event, sourcePath, outputDir, storeType, appName) => {
+  const fs = require('fs');
+  const path = require('path');
+  const sharp = require('sharp');
+  
+  const requirements = StoreRequirements.getRequirements(storeType);
+  if (!requirements || !requirements.icon || !requirements.icon.sizes) {
+    return { success: false, error: 'No icon requirements found for this store' };
+  }
+  
+  // Create output directory if it doesn't exist
+  const iconDir = path.join(outputDir, 'icons', storeType);
+  if (!fs.existsSync(iconDir)) {
+    fs.mkdirSync(iconDir, { recursive: true });
+  }
+  
+  const results = [];
+  const safeName = appName.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+  
+  for (const size of requirements.icon.sizes) {
+    const outputFilename = `${safeName}-icon-${size.width}x${size.height}.png`;
+    const outputPath = path.join(iconDir, outputFilename);
+    
+    try {
+      await sharp(sourcePath)
+        .resize(size.width, size.height, { fit: 'cover' })
+        .png()
+        .toFile(outputPath);
+      
+      results.push({
+        size: `${size.width}x${size.height}`,
+        name: size.name,
+        path: outputPath,
+        required: size.required
+      });
+    } catch (err) {
+      console.error(`Failed to resize icon to ${size.width}x${size.height}:`, err);
+    }
+  }
+  
+  return { success: true, icons: results, sourceIcon: sourcePath };
+});
+
+ipcMain.handle('image:processScreenshots', async (event, sourcePaths, outputDir, storeType, appName, screenshotType) => {
+  const fs = require('fs');
+  const path = require('path');
+  const sharp = require('sharp');
+  
+  const requirements = StoreRequirements.getRequirements(storeType);
+  if (!requirements || !requirements.screenshots) {
+    return { success: false, error: 'No screenshot requirements found for this store' };
+  }
+  
+  // Determine target sizes based on screenshot type and store
+  let targetSizes = [];
+  const screenshots = requirements.screenshots;
+  
+  if (screenshotType === 'phone') {
+    if (screenshots.iphone) targetSizes = targetSizes.concat(screenshots.iphone);
+    if (screenshots.phone) targetSizes = targetSizes.concat(screenshots.phone);
+    if (screenshots.mobile) targetSizes = targetSizes.concat(screenshots.mobile);
+  } else if (screenshotType === 'tablet') {
+    if (screenshots.ipad) targetSizes = targetSizes.concat(screenshots.ipad);
+    if (screenshots.tablet7) targetSizes = targetSizes.concat(screenshots.tablet7);
+    if (screenshots.tablet10) targetSizes = targetSizes.concat(screenshots.tablet10);
+    if (screenshots.desktop) targetSizes = targetSizes.concat(screenshots.desktop);
+  }
+  
+  // Fallback to generic sizes if none found
+  if (targetSizes.length === 0 && screenshots.sizes) {
+    targetSizes = screenshots.sizes;
+  }
+  
+  // Create output directory
+  const screenshotDir = path.join(outputDir, 'screenshots', storeType, screenshotType);
+  if (!fs.existsSync(screenshotDir)) {
+    fs.mkdirSync(screenshotDir, { recursive: true });
+  }
+  
+  const results = [];
+  const safeName = appName.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+  
+  for (let i = 0; i < sourcePaths.length; i++) {
+    const sourcePath = sourcePaths[i];
+    const sourceResults = [];
+    
+    // Get source image dimensions
+    const metadata = await sharp(sourcePath).metadata();
+    const sourceWidth = metadata.width;
+    const sourceHeight = metadata.height;
+    const sourceAspectRatio = sourceWidth / sourceHeight;
+    
+    // Find best matching target size based on aspect ratio
+    let bestMatch = targetSizes[0];
+    let bestDiff = Infinity;
+    
+    for (const size of targetSizes) {
+      const targetAspectRatio = size.width / size.height;
+      const diff = Math.abs(sourceAspectRatio - targetAspectRatio);
+      if (diff < bestDiff) {
+        bestDiff = diff;
+        bestMatch = size;
+      }
+    }
+    
+    // Resize to all relevant sizes
+    for (const size of targetSizes) {
+      const outputFilename = `${safeName}-${screenshotType}-${i + 1}-${size.width}x${size.height}.png`;
+      const outputPath = path.join(screenshotDir, outputFilename);
+      
+      try {
+        await sharp(sourcePath)
+          .resize(size.width, size.height, { fit: 'cover', position: 'center' })
+          .png()
+          .toFile(outputPath);
+        
+        sourceResults.push({
+          size: `${size.width}x${size.height}`,
+          name: size.name,
+          path: outputPath,
+          required: size.required
+        });
+      } catch (err) {
+        console.error(`Failed to resize screenshot to ${size.width}x${size.height}:`, err);
+      }
+    }
+    
+    results.push({
+      source: sourcePath,
+      resized: sourceResults
+    });
+  }
+  
+  return { success: true, screenshots: results };
+});
+
+ipcMain.handle('image:selectOutputDirectory', async () => {
+  const result = await dialog.showOpenDialog(mainWindow, {
+    properties: ['openDirectory', 'createDirectory'],
+    title: 'Select Output Directory for Resized Images'
   });
   
   if (!result.canceled && result.filePaths.length > 0) {

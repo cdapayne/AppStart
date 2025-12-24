@@ -3,7 +3,9 @@ const OpenAI = require('openai');
 class OpenAIService {
   constructor() {
     this.client = null;
-    this.model = 'gpt-4';
+    this.model = 'gpt-5.2';
+    this.reasoningEffort = 'none';
+    this.outputVerbosity = 'medium';
   }
 
   setApiKey(apiKey) {
@@ -15,7 +17,15 @@ class OpenAIService {
   }
 
   setModel(model) {
-    this.model = model || 'gpt-4';
+    this.model = model || 'gpt-5.2';
+  }
+
+  setReasoningEffort(effort) {
+    this.reasoningEffort = effort || 'none';
+  }
+
+  setOutputVerbosity(verbosity) {
+    this.outputVerbosity = verbosity || 'medium';
   }
 
   async validateApiKey(apiKey) {
@@ -28,7 +38,7 @@ class OpenAIService {
     }
   }
 
-  async generateAppPlan(projectData) {
+  async generateAppPlan(projectData, webContents) {
     if (!this.client) {
       throw new Error('OpenAI client not initialized. Please set your API key in Settings.');
     }
@@ -36,7 +46,11 @@ class OpenAIService {
     const prompt = this._buildPlanPrompt(projectData);
 
     try {
-      const completion = await this.client.chat.completions.create({
+      // Build request options based on model
+      const isGPT5Family = this.model.startsWith('gpt-5');
+      const isO1OrO3 = this.model.startsWith('o1') || this.model.startsWith('o3');
+      
+      const requestOptions = {
         model: this.model,
         messages: [
           {
@@ -48,15 +62,40 @@ class OpenAIService {
             content: prompt
           }
         ],
-        temperature: 0.7,
-        max_tokens: 4000,
         response_format: { type: 'json_object' }
-      });
+      };
 
-      const response = JSON.parse(completion.choices[0].message.content);
+      // Use max_completion_tokens for GPT-5 family and o-series models
+      if (isGPT5Family || isO1OrO3) {
+        requestOptions.max_completion_tokens = 16000;
+      } else {
+        // Use max_tokens for older models (GPT-4, GPT-3.5)
+        requestOptions.max_tokens = 4000;
+        requestOptions.temperature = 0.7;
+      }
+
+      const stream = await this.client.chat.completions.create({ ...requestOptions, stream: true });
+
+      let fullResponse = '';
+      for await (const chunk of stream) {
+        const content = chunk.choices[0]?.delta?.content || '';
+        fullResponse += content;
+        if (webContents) {
+          webContents.send('openai:plan-chunk', content);
+        }
+      }
+
+      if (webContents) {
+        webContents.send('openai:plan-finished');
+      }
+      
+      const response = JSON.parse(fullResponse);
       return response;
     } catch (error) {
       console.error('OpenAI API Error:', error);
+      if (webContents) {
+        webContents.send('openai:plan-error', error.message);
+      }
       throw new Error(`Failed to generate app plan: ${error.message}`);
     }
   }
@@ -113,7 +152,10 @@ Please provide a JSON response with the following structure:
 `;
 
     try {
-      const completion = await this.client.chat.completions.create({
+      const isGPT5Family = this.model.startsWith('gpt-5');
+      const isO1OrO3 = this.model.startsWith('o1') || this.model.startsWith('o3');
+
+      const requestOptions = {
         model: this.model,
         messages: [
           {
@@ -125,10 +167,17 @@ Please provide a JSON response with the following structure:
             content: prompt
           }
         ],
-        temperature: 0.7,
-        max_tokens: 3000,
         response_format: { type: 'json_object' }
-      });
+      };
+
+      if (isGPT5Family || isO1OrO3) {
+        requestOptions.max_completion_tokens = 3000;
+      } else {
+        requestOptions.max_tokens = 3000;
+        requestOptions.temperature = 0.7;
+      }
+
+      const completion = await this.client.chat.completions.create(requestOptions);
 
       const response = JSON.parse(completion.choices[0].message.content);
       return response;
@@ -164,7 +213,7 @@ Generate optimized store listing content for the ${storeNames[storeType] || stor
 - Age Range: ${projectData.ageRangeMin} - ${projectData.ageRangeMax}
 - Monetization: ${projectData.monetization}
 
-Please provide a JSON response with store-optimized content:
+Please provide a JSON response with store-optimized content including taglines:
 {
   "appName": "Optimized app name (within store limits)",
   "shortDescription": "Brief description optimized for ${storeType} (usually 80-170 chars)",
@@ -174,18 +223,45 @@ Please provide a JSON response with store-optimized content:
   "screenshotCaptions": [
     "Caption for screenshot 1 highlighting key feature",
     "Caption for screenshot 2 highlighting benefit",
-    ...
+    "Caption for screenshot 3",
+    "Caption for screenshot 4",
+    "Caption for screenshot 5"
   ],
   "whatsNew": "Template for what's new section",
   "promoText": "Promotional text for featuring",
   "category": "Recommended store category",
   "contentRating": "Suggested content rating",
-  "tips": ["Tip 1 for this store", "Tip 2", ...]
+  "tips": ["Tip 1 for this store", "Tip 2", ...],
+  "mainTaglines": [
+    "Primary tagline option 1",
+    "Primary tagline option 2",
+    "Primary tagline option 3"
+  ],
+  "subtitles": [
+    "App Store subtitle option 1 (30 chars max)",
+    "App Store subtitle option 2"
+  ],
+  "screenshotTaglines": [
+    {"feature": "Onboarding/Welcome", "taglines": ["Option 1", "Option 2"]},
+    {"feature": "Main Feature 1", "taglines": ["Option 1", "Option 2"]},
+    {"feature": "Main Feature 2", "taglines": ["Option 1", "Option 2"]},
+    {"feature": "Social Proof/Reviews", "taglines": ["Option 1", "Option 2"]},
+    {"feature": "Call to Action", "taglines": ["Option 1", "Option 2"]}
+  ],
+  "promoVideoTaglines": ["Video intro tagline", "Video outro/CTA tagline"],
+  "socialMediaTaglines": {
+    "twitter": "Short punchy tagline for Twitter",
+    "instagram": "Engaging Instagram caption",
+    "facebook": "Facebook post tagline"
+  }
 }
 `;
 
     try {
-      const completion = await this.client.chat.completions.create({
+      const isGPT5Family = this.model.startsWith('gpt-5');
+      const isO1OrO3 = this.model.startsWith('o1') || this.model.startsWith('o3');
+
+      const requestOptions = {
         model: this.model,
         messages: [
           {
@@ -197,12 +273,29 @@ Please provide a JSON response with store-optimized content:
             content: prompt
           }
         ],
-        temperature: 0.8,
-        max_tokens: 2500,
         response_format: { type: 'json_object' }
-      });
+      };
 
-      const response = JSON.parse(completion.choices[0].message.content);
+      if (isGPT5Family || isO1OrO3) {
+        requestOptions.max_completion_tokens = 12000;
+      } else {
+        requestOptions.max_tokens = 6000;
+        requestOptions.temperature = 0.8;
+      }
+
+      const completion = await this.client.chat.completions.create(requestOptions);
+
+      // Check if the response was cut off
+      if (completion.choices[0].finish_reason === 'length') {
+        throw new Error('Response was cut off due to length. Please try again.');
+      }
+
+      const content = completion.choices[0].message.content;
+      if (!content) {
+        throw new Error('Received empty response from OpenAI.');
+      }
+
+      const response = JSON.parse(content);
       return response;
     } catch (error) {
       console.error('OpenAI API Error:', error);
@@ -244,7 +337,10 @@ Provide keywords in JSON format:
 `;
 
     try {
-      const completion = await this.client.chat.completions.create({
+      const isGPT5Family = this.model.startsWith('gpt-5');
+      const isO1OrO3 = this.model.startsWith('o1') || this.model.startsWith('o3');
+
+      const requestOptions = {
         model: this.model,
         messages: [
           {
@@ -256,12 +352,29 @@ Provide keywords in JSON format:
             content: prompt
           }
         ],
-        temperature: 0.8,
-        max_tokens: 2000,
         response_format: { type: 'json_object' }
-      });
+      };
 
-      const response = JSON.parse(completion.choices[0].message.content);
+      if (isGPT5Family || isO1OrO3) {
+        requestOptions.max_completion_tokens = 8000;
+      } else {
+        requestOptions.max_tokens = 4000;
+        requestOptions.temperature = 0.8;
+      }
+
+      const completion = await this.client.chat.completions.create(requestOptions);
+
+      // Check if the response was cut off
+      if (completion.choices[0].finish_reason === 'length') {
+        throw new Error('Response was cut off due to length. Please try again.');
+      }
+
+      const content = completion.choices[0].message.content;
+      if (!content) {
+        throw new Error('Received empty response from OpenAI.');
+      }
+
+      const response = JSON.parse(content);
       return response;
     } catch (error) {
       console.error('OpenAI API Error:', error);
@@ -330,7 +443,10 @@ Provide creative content in JSON format:
 `;
 
     try {
-      const completion = await this.client.chat.completions.create({
+      const isGPT5Family = this.model.startsWith('gpt-5');
+      const isO1OrO3 = this.model.startsWith('o1') || this.model.startsWith('o3');
+
+      const requestOptions = {
         model: this.model,
         messages: [
           {
@@ -342,16 +458,224 @@ Provide creative content in JSON format:
             content: prompt
           }
         ],
-        temperature: 0.9,
-        max_tokens: 2000,
         response_format: { type: 'json_object' }
-      });
+      };
 
-      const response = JSON.parse(completion.choices[0].message.content);
+      if (isGPT5Family || isO1OrO3) {
+        requestOptions.max_completion_tokens = 8000;
+      } else {
+        requestOptions.max_tokens = 4000;
+        requestOptions.temperature = 0.9;
+      }
+
+      const completion = await this.client.chat.completions.create(requestOptions);
+
+      // Check if the response was cut off
+      if (completion.choices[0].finish_reason === 'length') {
+        throw new Error('Response was cut off due to length. Please try again.');
+      }
+
+      const content = completion.choices[0].message.content;
+      if (!content) {
+        throw new Error('Received empty response from OpenAI.');
+      }
+
+      const response = JSON.parse(content);
       return response;
     } catch (error) {
       console.error('OpenAI API Error:', error);
       throw new Error(`Failed to generate taglines: ${error.message}`);
+    }
+  }
+
+  async generatePitch(projectData) {
+    if (!this.client) {
+      throw new Error('OpenAI client not initialized. Please set your API key in Settings.');
+    }
+
+    // Extract key features and tech stack from AI plan if available
+    const aiPlan = projectData.aiPlan || {};
+    const keyFeatures = aiPlan.keyFeatures ? aiPlan.keyFeatures.join('\n- ') : 'Not yet defined';
+    const techStack = aiPlan.techStack ? JSON.stringify(aiPlan.techStack, null, 2) : 'Not yet defined';
+    const timeline = aiPlan.timeline ? JSON.stringify(aiPlan.timeline, null, 2) : 'Not yet defined';
+    const risks = aiPlan.risks ? aiPlan.risks.map(r => `${r.risk} (Impact: ${r.impact})`).join('\n- ') : 'Not yet analyzed';
+    const marketingStrategy = aiPlan.marketingStrategy ? JSON.stringify(aiPlan.marketingStrategy, null, 2) : 'Not yet defined';
+    const overview = aiPlan.overview || '';
+
+    const prompt = `
+You are a world-class pitch expert combining the persuasive brilliance of the greatest Shark Tank pitches with the inspirational storytelling mastery of legendary TED Talks. You are about to create the most compelling, comprehensive, and memorable pitch for an app that will captivate investors, inspire teams, and move audiences to action.
+
+══════════════════════════════════════════════════════════════
+                    APP PROJECT DETAILS
+══════════════════════════════════════════════════════════════
+
+**App Name:** ${projectData.name || 'Untitled App'}
+
+**Category:** ${projectData.category || 'General'} / ${projectData.subcategory || 'Apps'}
+
+**Full App Description:**
+${projectData.description || 'No description provided'}
+
+**Target Markets:** ${(projectData.targetMarkets || []).join(', ') || 'Global'}
+
+**Target Age Range:** ${projectData.ageRangeMin || '4'} - ${projectData.ageRangeMax || '99'} years
+
+**Monetization Strategy:** ${projectData.monetization || 'Free'}
+
+**Additional Requirements & Notes:**
+${projectData.additionalNotes || 'None provided'}
+
+**Agent/Development Instructions:**
+${projectData.agentInstructions || 'None provided'}
+
+══════════════════════════════════════════════════════════════
+                    AI-GENERATED PLAN INSIGHTS
+══════════════════════════════════════════════════════════════
+
+**Project Overview:**
+${overview}
+
+**Key Features:**
+- ${keyFeatures}
+
+**Technology Stack:**
+${techStack}
+
+**Development Timeline:**
+${timeline}
+
+**Identified Risks:**
+- ${risks}
+
+**Marketing Strategy:**
+${marketingStrategy}
+
+══════════════════════════════════════════════════════════════
+                    YOUR MISSION
+══════════════════════════════════════════════════════════════
+
+Create an EXTENSIVE, COMPREHENSIVE pitch presentation script that could be delivered as a 15-20 minute keynote. This should be a complete, polished pitch that covers every angle. The pitch must be AT LEAST 2000-3000 words.
+
+**STRUCTURE YOUR PITCH WITH THESE SECTIONS:**
+
+## 1. THE HOOK (200-300 words)
+- Open with a powerful, attention-grabbing story, statistic, or question
+- Paint a vivid picture of the problem or opportunity
+- Make it personal and relatable
+- Create emotional resonance immediately
+
+## 2. THE PROBLEM (300-400 words)
+- Deep dive into the pain points users face
+- Use specific examples and scenarios
+- Quantify the problem where possible
+- Show you truly understand the frustration
+- Build empathy and urgency
+
+## 3. THE SOLUTION - YOUR APP (400-500 words)
+- Introduce the app as the hero of the story
+- Explain exactly how it works
+- Walk through the key features with enthusiasm
+- Show the transformation from problem to solution
+- Use vivid, sensory language to help them "see" the app
+
+## 4. THE MARKET OPPORTUNITY (300-400 words)
+- Define the target audience clearly
+- Discuss market size and growth potential
+- Explain why now is the perfect time
+- Address the competitive landscape
+- Show your unique positioning
+
+## 5. THE BUSINESS MODEL (200-300 words)
+- Explain how the app makes money
+- Discuss pricing strategy
+- Project potential revenue
+- Show the path to profitability
+- Address scalability
+
+## 6. THE JOURNEY AHEAD (300-400 words)
+- Acknowledge the challenges honestly
+- Show your roadmap and milestones
+- Discuss what you've already accomplished
+- Share your development approach
+- Build confidence in execution
+
+## 7. THE VISION (300-400 words)
+- Paint the picture of success
+- Describe the impact on users' lives
+- Share your bigger mission
+- Inspire with possibility
+- Connect to something larger than the app itself
+
+## 8. THE CALL TO ACTION (200-300 words)
+- Summarize the opportunity
+- Create urgency without being pushy
+- End with a memorable, quotable statement
+- Leave them wanting to be part of this journey
+
+**STYLE REQUIREMENTS:**
+- Write in first person as the passionate founder/creator
+- Be authentic, enthusiastic, and genuine - not corporate or salesy
+- Use vivid metaphors and analogies
+- Include specific details that bring the vision to life
+- Vary sentence rhythm - short punchy statements mixed with flowing descriptions
+- Include 5-10 "quotable" lines that could stand alone as memorable statements
+- Use rhetorical questions to engage the audience
+- Build emotional momentum throughout
+- Reference real-world scenarios and use cases
+- Show vulnerability alongside confidence
+- End STRONG - the closing should be powerful and memorable
+
+**TONE:**
+Imagine you're presenting to:
+- A room of investors who could fund your dream
+- A TED audience hungry for inspiration
+- Future users who need to believe in your solution
+- A team you want to inspire to build something amazing
+
+Return your response as JSON:
+{
+  "pitch": "Your complete, extensive pitch monologue here with all sections..."
+}
+`;
+
+    try {
+      const isGPT5Family = this.model.startsWith('gpt-5');
+      const isO1OrO3 = this.model.startsWith('o1') || this.model.startsWith('o3');
+
+      const requestOptions = {
+        model: this.model,
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a legendary pitch expert and storyteller. You have written pitches for the most successful startups in history. You combine the persuasive genius of Steve Jobs product launches, the emotional storytelling of the best TED speakers, and the business acumen of top Shark Tank contestants. Your pitches are comprehensive, compelling, and unforgettable. You write LONG, DETAILED pitches that leave no stone unturned. Never write a short pitch - always go deep and comprehensive.'
+          },
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        response_format: { type: 'json_object' }
+      };
+
+      if (isGPT5Family || isO1OrO3) {
+        requestOptions.max_completion_tokens = 10000;
+      } else {
+        requestOptions.max_tokens = 8000;
+        requestOptions.temperature = 0.85;
+      }
+
+      const completion = await this.client.chat.completions.create(requestOptions);
+
+      const content = completion.choices[0].message.content;
+      if (!content) {
+        throw new Error('Received empty response from OpenAI.');
+      }
+
+      const response = JSON.parse(content);
+      return response;
+    } catch (error) {
+      console.error('OpenAI API Error:', error);
+      throw new Error(`Failed to generate pitch: ${error.message}`);
     }
   }
 
@@ -429,6 +753,85 @@ Please provide a detailed development plan in the following JSON structure:
   "additionalRecommendations": "Any additional advice for making this app successful"
 }
 `;
+  }
+
+  async translateContent(content, targetLanguage, targetRegion) {
+    if (!this.client) {
+      throw new Error('OpenAI client not initialized. Please set your API key in Settings.');
+    }
+
+    const prompt = `You are a professional app store localization expert. Translate the following app store listing content from English to ${targetLanguage}.
+
+Important guidelines:
+- Maintain the marketing tone and appeal
+- Adapt cultural references appropriately for ${targetRegion}
+- Keep app-specific terms and brand names unchanged if appropriate
+- Ensure keywords are commonly searched terms in ${targetLanguage}
+- Maintain formatting and line breaks
+
+Content to translate:
+
+APP NAME: ${content.appName || '(not provided)'}
+
+TAGLINE: ${content.tagline || '(not provided)'}
+
+SHORT DESCRIPTION: ${content.shortDescription || '(not provided)'}
+
+FULL DESCRIPTION:
+${content.longDescription || '(not provided)'}
+
+KEYWORDS: ${content.keywords || '(not provided)'}
+
+Return your translation as a JSON object with these exact keys:
+{
+  "appName": "translated app name",
+  "tagline": "translated tagline",
+  "shortDescription": "translated short description",
+  "longDescription": "translated full description",
+  "keywords": "translated keywords"
+}
+
+Only return the JSON, no other text.`;
+
+    try {
+      const isGPT5Family = this.model.startsWith('gpt-5');
+      const isO1OrO3 = this.model.startsWith('o1') || this.model.startsWith('o3');
+
+      const requestOptions = {
+        model: this.model,
+        messages: [
+          {
+            role: 'system',
+            content: 'You are an expert app store localization specialist. Translate content accurately while maintaining marketing appeal. Respond only in JSON format.'
+          },
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        response_format: { type: 'json_object' }
+      };
+
+      if (isGPT5Family || isO1OrO3) {
+        requestOptions.max_completion_tokens = 4000;
+      } else {
+        requestOptions.max_tokens = 4000;
+        requestOptions.temperature = 0.7;
+      }
+
+      const completion = await this.client.chat.completions.create(requestOptions);
+
+      const responseContent = completion.choices[0].message.content;
+      if (!responseContent) {
+        throw new Error('Received empty response from OpenAI.');
+      }
+
+      const response = JSON.parse(responseContent);
+      return response;
+    } catch (error) {
+      console.error('OpenAI API Error:', error);
+      throw new Error(`Failed to translate content: ${error.message}`);
+    }
   }
 }
 
