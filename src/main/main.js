@@ -100,6 +100,12 @@ async function initialize() {
 app.whenReady().then(async () => {
   await initialize();
   createWindow();
+  
+  // Set dock icon on macOS
+  if (process.platform === 'darwin' && app.dock) {
+    const iconPath = path.join(__dirname, '../assets/icon.png');
+    app.dock.setIcon(iconPath);
+  }
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -279,6 +285,120 @@ ipcMain.handle('openai:translateContent', async (event, content, targetLanguage,
   return await openaiService.translateContent(content, targetLanguage, targetRegion);
 });
 
+// --- Codex Integration ---
+ipcMain.handle('codex:build', async (event, config) => {
+  const { spawn } = require('child_process');
+  const fs = require('fs');
+  const path = require('path');
+  
+  const settings = database.getSettings();
+  if (!settings.openaiApiKey) {
+    throw new Error('OpenAI API key not configured. Please set it in Settings.');
+  }
+  
+  return new Promise((resolve) => {
+    try {
+      const projectDir = path.join(config.outputDir, config.projectName);
+      
+      // Create project directory
+      if (!fs.existsSync(projectDir)) {
+        fs.mkdirSync(projectDir, { recursive: true });
+      }
+      
+      // Create INSTRUCTIONS.md with the agent instructions
+      const instructionsPath = path.join(projectDir, 'INSTRUCTIONS.md');
+      const instructionsContent = `# ${config.appName}
+
+## Project Overview
+${config.appDescription || 'No description provided.'}
+
+## Build Instructions
+
+${config.instructions}
+`;
+      fs.writeFileSync(instructionsPath, instructionsContent, 'utf-8');
+      
+      // Create a codex prompt file
+      const promptPath = path.join(projectDir, '.codex-prompt');
+      fs.writeFileSync(promptPath, config.instructions, 'utf-8');
+      
+      // Try to run codex CLI
+      const codexProcess = spawn('npx', [
+        '@openai/codex',
+        '--model', config.model || 'codex',
+        '--approval-mode', 'full-auto',
+        '--quiet',
+        config.instructions.substring(0, 4000) // Limit prompt length
+      ], {
+        cwd: projectDir,
+        env: {
+          ...process.env,
+          OPENAI_API_KEY: settings.openaiApiKey
+        },
+        shell: true
+      });
+      
+      let output = '';
+      let errorOutput = '';
+      
+      codexProcess.stdout.on('data', (data) => {
+        output += data.toString();
+        // Send progress to renderer
+        if (mainWindow) {
+          mainWindow.webContents.send('codex:progress', data.toString());
+        }
+      });
+      
+      codexProcess.stderr.on('data', (data) => {
+        errorOutput += data.toString();
+        // Also stream stderr so user can see conversation/errors
+        if (mainWindow) {
+          mainWindow.webContents.send('codex:progress', data.toString());
+        }
+      });
+      
+      codexProcess.on('close', (code) => {
+        if (code === 0) {
+          resolve({ success: true, output: output, projectDir: projectDir });
+        } else {
+          // If codex CLI fails, at least we created the instructions file
+          resolve({ 
+            success: true, 
+            output: 'Codex CLI not available or failed. Instructions saved to ' + instructionsPath,
+            projectDir: projectDir,
+            instructionsOnly: true,
+            error: errorOutput || 'Codex CLI exited with code ' + code
+          });
+        }
+      });
+      
+      codexProcess.on('error', (err) => {
+        // If codex is not installed, still save the instructions
+        resolve({ 
+          success: true, 
+          output: 'Codex CLI not found. Instructions saved to ' + instructionsPath + '. Install with: npm install -g @openai/codex',
+          projectDir: projectDir,
+          instructionsOnly: true
+        });
+      });
+      
+      // Timeout after 5 minutes
+      setTimeout(() => {
+        codexProcess.kill();
+        resolve({ 
+          success: true, 
+          output: 'Build timed out. Instructions saved to ' + instructionsPath,
+          projectDir: projectDir,
+          instructionsOnly: true
+        });
+      }, 300000);
+      
+    } catch (error) {
+      resolve({ success: false, error: error.message });
+    }
+  });
+});
+
 // --- File Operations ---
 ipcMain.handle('file:selectImage', async () => {
   const result = await dialog.showOpenDialog(mainWindow, {
@@ -324,7 +444,7 @@ ipcMain.handle('file:selectVideo', async () => {
 
 ipcMain.handle('file:selectDirectory', async () => {
   const result = await dialog.showOpenDialog(mainWindow, {
-    properties: ['openDirectory']
+    properties: ['openDirectory', 'createDirectory']
   });
   
   if (!result.canceled && result.filePaths.length > 0) {

@@ -1259,13 +1259,21 @@ function renderProjectPlanning(container, project) {
               '<svg class="w-6 h-6 text-accent-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>' +
               'AI Agent Instructions' +
             '</h3>' +
-            '<div class="bg-surface-800 rounded-lg p-4 font-mono text-sm text-surface-300 whitespace-pre-wrap overflow-x-auto">' +
+            '<div class="bg-surface-800 rounded-lg p-4 font-mono text-sm text-surface-300 whitespace-pre-wrap overflow-x-auto max-h-96 overflow-y-auto">' +
               escapeHtml(aiPlan.agentInstructions || project.agentInstructions || 'No agent instructions generated') +
             '</div>' +
-            '<button onclick="copyToClipboard(AppState.currentProject.aiPlan.agentInstructions || AppState.currentProject.agentInstructions)" class="btn-secondary mt-4">' +
-              '<svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>' +
-              'Copy Instructions' +
-            '</button>' +
+            '<div class="flex flex-wrap gap-3 mt-4">' +
+              '<button onclick="copyToClipboard(AppState.currentProject.aiPlan.agentInstructions || AppState.currentProject.agentInstructions)" class="btn-secondary">' +
+                '<svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>' +
+                'Copy Instructions' +
+              '</button>' +
+              (AppState.settings.experimentalCodex ? 
+                '<button onclick="buildWithCodex()" class="btn-primary bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600">' +
+                  '<svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>' +
+                  'Build with Codex' +
+                  '<span class="ml-2 text-xs bg-white/20 px-1.5 py-0.5 rounded">BETA</span>' +
+                '</button>' : '') +
+            '</div>' +
           '</div>' +
           
           '<!-- Timeline -->' +
@@ -4756,7 +4764,7 @@ function renderSettings(container) {
           '</div>' +
           
           '<!-- General Settings -->' +
-          '<div class="pb-6">' +
+          '<div class="border-b border-surface-700 pb-6">' +
             '<h4 class="font-semibold mb-4 flex items-center gap-2">' +
               '<svg class="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>' +
               'General' +
@@ -4764,6 +4772,21 @@ function renderSettings(container) {
             '<div class="space-y-4">' +
               renderToggle('auto-save', 'Auto Save', 'Automatically save changes', settings.autoSave !== false) +
               renderToggle('notifications', 'Notifications', 'Show desktop notifications', settings.notificationEnabled !== false) +
+            '</div>' +
+          '</div>' +
+          
+          '<!-- Experimental Features -->' +
+          '<div class="pb-6">' +
+            '<h4 class="font-semibold mb-4 flex items-center gap-2">' +
+              '<svg class="w-5 h-5 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>' +
+              'Experimental Features' +
+              '<span class="badge bg-pink-500/20 text-pink-400 text-xs">BETA</span>' +
+            '</h4>' +
+            '<div class="bg-surface-800/50 rounded-lg p-4 mb-4">' +
+              '<p class="text-sm text-surface-400">These features are experimental and may change or be removed. Use at your own risk!</p>' +
+            '</div>' +
+            '<div class="space-y-4">' +
+              renderToggle('experimental-codex', 'Codex Build Integration', 'Enable "Build with Codex" button to generate project code from AI instructions using OpenAI Codex CLI', settings.experimentalCodex === true) +
             '</div>' +
           '</div>' +
           
@@ -4874,7 +4897,8 @@ async function handleSettingsSave(event) {
     theme: document.querySelector('input[name="theme"]:checked').value,
     branding: document.getElementById('branding').value,
     autoSave: document.getElementById('auto-save').classList.contains('toggle-active'),
-    notificationEnabled: document.getElementById('notifications').classList.contains('toggle-active')
+    notificationEnabled: document.getElementById('notifications').classList.contains('toggle-active'),
+    experimentalCodex: document.getElementById('experimental-codex').classList.contains('toggle-active')
   };
   
   try {
@@ -5415,4 +5439,237 @@ function copyToClipboard(text) {
   }).catch(function() {
     showToast('Failed to copy', 'error');
   });
+}
+
+// ==================== Codex Integration ====================
+async function buildWithCodex() {
+  var project = AppState.currentProject;
+  if (!project) {
+    showToast('No project selected', 'error');
+    return;
+  }
+  
+  var instructions = project.aiPlan?.agentInstructions || project.agentInstructions;
+  if (!instructions) {
+    showToast('No agent instructions available. Generate an AI plan first.', 'warning');
+    return;
+  }
+  
+  // Show modal to configure Codex build
+  var modalContent = '' +
+    '<div class="space-y-4">' +
+      '<div class="bg-gradient-to-r from-pink-500/10 to-purple-500/10 border border-pink-500/20 rounded-lg p-4">' +
+        '<div class="flex items-center gap-2 mb-2">' +
+          '<svg class="w-5 h-5 text-pink-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>' +
+          '<span class="font-semibold text-pink-400">Experimental Feature</span>' +
+        '</div>' +
+        '<p class="text-sm text-surface-300">This will use OpenAI Codex CLI to generate your project code based on the AI agent instructions.</p>' +
+      '</div>' +
+      
+      '<div>' +
+        '<label class="label">Project Output Directory</label>' +
+        '<div class="flex gap-2">' +
+          '<input type="text" id="codex-output-dir" class="input flex-1" placeholder="Select output directory..." readonly>' +
+          '<button type="button" onclick="selectCodexOutputDir()" class="btn-secondary">Browse</button>' +
+        '</div>' +
+        '<p class="text-xs text-surface-400 mt-1">Where should the generated project be created?</p>' +
+      '</div>' +
+      
+      '<div>' +
+        '<label class="label">Project Name</label>' +
+        '<input type="text" id="codex-project-name" class="input" value="' + escapeHtml(project.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')) + '">' +
+      '</div>' +
+      
+      '<div>' +
+        '<label class="label">Codex Model</label>' +
+        '<select id="codex-model" class="select">' +
+          '<option value="codex" selected>Codex (Default)</option>' +
+          '<option value="o4-mini">o4-mini (Fast)</option>' +
+          '<option value="o3">o3 (Advanced)</option>' +
+        '</select>' +
+      '</div>' +
+      
+      '<div class="bg-surface-800 rounded-lg p-4">' +
+        '<label class="label mb-2">Instructions <span class="text-surface-400 font-normal">(Editable)</span></label>' +
+        '<textarea id="codex-instructions" class="input font-mono text-sm h-64 overflow-y-auto resize-y" style="min-height: 200px; max-height: 400px;">' +
+          escapeHtml(instructions) +
+        '</textarea>' +
+        '<p class="text-xs text-surface-400 mt-1">Review and edit the instructions that will be sent to Codex</p>' +
+      '</div>' +
+      
+      '<div class="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3">' +
+        '<p class="text-sm text-yellow-400"><strong>Requirements:</strong></p>' +
+        '<ul class="text-sm text-surface-300 list-disc list-inside mt-1">' +
+          '<li>OpenAI Codex CLI must be installed (<code class="text-pink-400">npm install -g @openai/codex</code>)</li>' +
+          '<li>Valid OpenAI API key configured</li>' +
+          '<li>This may take several minutes and use API credits</li>' +
+        '</ul>' +
+      '</div>' +
+      
+      '<div class="flex gap-3 pt-2">' +
+        '<button type="button" onclick="closeModal()" class="btn-secondary flex-1">Cancel</button>' +
+        '<button type="button" onclick="startCodexBuild()" class="btn-primary bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 flex-1 py-3 text-lg font-bold">' +
+          '<span class="flex items-center justify-center gap-2">' +
+            '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>' +
+            'Start Building' +
+          '</span>' +
+        '</button>' +
+      '</div>' +
+    '</div>';
+  
+  showModal(
+    '🚀 Build with Codex',
+    modalContent,
+    []
+  );
+}
+
+async function selectCodexOutputDir() {
+  try {
+    var dir = await window.electronAPI.selectDirectory();
+    if (dir) {
+      document.getElementById('codex-output-dir').value = dir;
+    }
+  } catch (error) {
+    showToast('Failed to select directory: ' + error.message, 'error');
+  }
+}
+
+var codexProgressListener = null;
+
+async function startCodexBuild() {
+  var outputDir = document.getElementById('codex-output-dir').value;
+  var projectName = document.getElementById('codex-project-name').value;
+  var model = document.getElementById('codex-model').value;
+  var instructions = document.getElementById('codex-instructions').value;
+  
+  if (!outputDir) {
+    showToast('Please select an output directory', 'warning');
+    return;
+  }
+  
+  if (!projectName) {
+    showToast('Please enter a project name', 'warning');
+    return;
+  }
+  
+  if (!instructions || instructions.trim().length === 0) {
+    showToast('Instructions cannot be empty', 'warning');
+    return;
+  }
+  
+  closeModal();
+  
+  var project = AppState.currentProject;
+  
+  // Show streaming output modal
+  showCodexStreamingModal(projectName, model);
+  
+  // Set up progress listener for real-time streaming
+  if (codexProgressListener) {
+    codexProgressListener(); // Remove old listener
+  }
+  codexProgressListener = window.electronAPI.on('codex:progress', function(data) {
+    appendCodexOutput(data);
+  });
+  
+  try {
+    var result = await window.electronAPI.runCodexBuild({
+      outputDir: outputDir,
+      projectName: projectName,
+      instructions: instructions,
+      model: model,
+      appName: project.name,
+      appDescription: project.appDescription
+    });
+    
+    if (result.success) {
+      if (result.instructionsOnly) {
+        appendCodexOutput('\n\n✅ ' + result.output);
+      } else {
+        appendCodexOutput('\n\n✅ Build completed successfully!');
+      }
+      showCodexComplete(true, result.projectDir);
+    } else {
+      appendCodexOutput('\n\n❌ Error: ' + result.error);
+      showCodexComplete(false, null);
+    }
+  } catch (error) {
+    console.error('Codex build error:', error);
+    appendCodexOutput('\n\n❌ Error: ' + error.message);
+    showCodexComplete(false, null);
+  } finally {
+    if (codexProgressListener) {
+      codexProgressListener();
+      codexProgressListener = null;
+    }
+  }
+}
+
+function showCodexStreamingModal(projectName, model) {
+  var modalContent = '' +
+    '<div class="space-y-4">' +
+      '<div class="flex items-center gap-3 mb-4">' +
+        '<div class="animate-spin rounded-full h-6 w-6 border-2 border-pink-500 border-t-transparent" id="codex-spinner"></div>' +
+        '<span class="text-lg font-semibold">Building <span class="text-pink-400">' + escapeHtml(projectName) + '</span>...</span>' +
+      '</div>' +
+      
+      '<div class="bg-surface-900 rounded-lg border border-surface-700">' +
+        '<div class="flex items-center gap-2 px-4 py-2 border-b border-surface-700 bg-surface-800 rounded-t-lg">' +
+          '<div class="flex gap-1.5">' +
+            '<div class="w-3 h-3 rounded-full bg-red-500"></div>' +
+            '<div class="w-3 h-3 rounded-full bg-yellow-500"></div>' +
+            '<div class="w-3 h-3 rounded-full bg-green-500"></div>' +
+          '</div>' +
+          '<span class="text-sm text-surface-400 ml-2">Codex Output</span>' +
+        '</div>' +
+        '<div id="codex-output" class="p-4 font-mono text-sm text-green-400 h-96 overflow-y-auto whitespace-pre-wrap" style="background: #0d1117;">' +
+          '<span class="text-surface-500">$ codex --model ' + escapeHtml(model || 'codex') + ' --approval-mode full-auto</span>\n' +
+          '<span class="text-pink-400">Initializing Codex CLI...</span>\n\n' +
+        '</div>' +
+      '</div>' +
+      
+      '<div id="codex-status" class="text-center text-surface-400">' +
+        '<span class="animate-pulse">⏳ This may take several minutes. Codex is generating your project...</span>' +
+      '</div>' +
+      
+      '<div id="codex-actions" class="hidden">' +
+        '<button type="button" onclick="closeModal()" class="btn-primary w-full bg-gradient-to-r from-pink-500 to-purple-500">Close</button>' +
+      '</div>' +
+    '</div>';
+  
+  showModal('🔨 Codex Building...', modalContent, []);
+}
+
+function appendCodexOutput(text) {
+  var outputEl = document.getElementById('codex-output');
+  if (outputEl) {
+    outputEl.textContent += text;
+    outputEl.scrollTop = outputEl.scrollHeight;
+  }
+}
+
+function showCodexComplete(success, projectDir) {
+  var spinnerEl = document.getElementById('codex-spinner');
+  var statusEl = document.getElementById('codex-status');
+  var actionsEl = document.getElementById('codex-actions');
+  
+  if (spinnerEl) {
+    spinnerEl.classList.remove('animate-spin');
+    spinnerEl.innerHTML = success ? '✅' : '❌';
+    spinnerEl.classList.add('text-2xl');
+  }
+  
+  if (statusEl) {
+    if (success) {
+      statusEl.innerHTML = '<span class="text-green-400">✅ Build complete!</span>' + 
+        (projectDir ? '<br><span class="text-sm text-surface-400">Project created at: ' + escapeHtml(projectDir) + '</span>' : '');
+    } else {
+      statusEl.innerHTML = '<span class="text-red-400">❌ Build failed. Check the output above for details.</span>';
+    }
+  }
+  
+  if (actionsEl) {
+    actionsEl.classList.remove('hidden');
+  }
 }

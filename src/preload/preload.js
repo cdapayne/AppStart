@@ -37,6 +37,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
   generatePitch: (projectData) => ipcRenderer.invoke('openai:generatePitch', projectData),
   translateContent: (content, targetLanguage, targetRegion) => ipcRenderer.invoke('openai:translateContent', content, targetLanguage, targetRegion),
 
+  // Codex Integration
+  runCodexBuild: (config) => ipcRenderer.invoke('codex:build', config),
+
   // File Operations
   selectImage: () => ipcRenderer.invoke('file:selectImage'),
   selectMultipleImages: () => ipcRenderer.invoke('file:selectMultipleImages'),
@@ -62,7 +65,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   // Event listeners for streaming
   on: (channel, callback) => {
-    const validChannels = ['openai:plan-chunk', 'openai:plan-finished', 'openai:plan-error'];
+    const validChannels = ['openai:plan-chunk', 'openai:plan-finished', 'openai:plan-error', 'codex:progress'];
     if (validChannels.includes(channel)) {
       // Deliberately strip event as it includes `sender`
       const subscription = (event, ...args) => callback(...args);

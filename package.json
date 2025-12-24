@@ -8,11 +8,12 @@
     "dev": "NODE_ENV=development electron .",
     "build:css": "tailwindcss -i ./src/renderer/styles/input.css -o ./src/renderer/styles/output.css --minify",
     "watch:css": "tailwindcss -i ./src/renderer/styles/input.css -o ./src/renderer/styles/output.css --watch",
-    "build": "npm run build:css && electron-builder",
-    "build:win": "npm run build:css && electron-builder --win",
-    "build:mac": "npm run build:css && electron-builder --mac",
-    "build:linux": "npm run build:css && electron-builder --linux",
-    "build:all": "npm run build:css && electron-builder --win --mac --linux",
+    "build:icons": "node scripts/convert-icons.js",
+    "build": "npm run build:icons && npm run build:css && electron-builder",
+    "build:win": "npm run build:icons && npm run build:css && electron-builder --win",
+    "build:mac": "npm run build:icons && npm run build:css && electron-builder --mac",
+    "build:linux": "npm run build:icons && npm run build:css && electron-builder --linux",
+    "build:all": "npm run build:icons && npm run build:css && electron-builder --win --mac --linux",
     "test": "jest"
   },
   "repository": {

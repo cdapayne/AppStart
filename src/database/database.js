@@ -137,6 +137,13 @@ class AppDatabase {
       // Column already exists, ignore
     }
 
+    // Migration: Add experimental_codex setting
+    try {
+      this.db.exec(`ALTER TABLE settings ADD COLUMN experimental_codex INTEGER DEFAULT 0`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+
     // Insert default settings if not exists
     const settingsExist = this.db.prepare('SELECT COUNT(*) as count FROM settings').get();
     if (settingsExist.count === 0) {
@@ -162,6 +169,7 @@ class AppDatabase {
         enableAiTaglines: !!row.enable_ai_taglines,
         autoSave: !!row.auto_save,
         notificationEnabled: !!row.notification_enabled,
+        experimentalCodex: !!row.experimental_codex,
       };
     }
     return null;
@@ -214,6 +222,10 @@ class AppDatabase {
     if (settings.notificationEnabled !== undefined) {
       updates.push('notification_enabled = @notificationEnabled');
       params.notificationEnabled = settings.notificationEnabled ? 1 : 0;
+    }
+    if (settings.experimentalCodex !== undefined) {
+      updates.push('experimental_codex = @experimentalCodex');
+      params.experimentalCodex = settings.experimentalCodex ? 1 : 0;
     }
 
     if (updates.length > 0) {

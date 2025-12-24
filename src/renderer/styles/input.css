@@ -45,6 +45,20 @@
   ::-webkit-scrollbar-thumb:hover {
     @apply bg-surface-400 dark:bg-surface-500;
   }
+
+  /* Window drag region for moving the app */
+  .window-drag-region {
+    -webkit-app-region: drag;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  .window-drag-region button,
+  .window-drag-region a,
+  .window-drag-region input,
+  .window-drag-region select {
+    -webkit-app-region: no-drag;
+  }
 }
 
 @layer components {
