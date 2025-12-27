@@ -26,14 +26,8 @@
     <!-- Sidebar Navigation -->
     <aside id="sidebar" class="w-64 bg-surface-900 border-r border-surface-800 flex flex-col">
       <!-- Logo -->
-      <div class="p-6 border-b border-surface-800">
-        <div class="flex items-center gap-3">
-          <img src="../assets/icon.png" alt="App Creator A to Z" class="w-10 h-10 rounded-xl shadow-lg">
-          <div>
-            <h1 class="font-bold text-lg gradient-text">App Creator</h1>
-            <p class="text-xs text-surface-500">A to Z</p>
-          </div>
-        </div>
+      <div class="p-6 border-b border-surface-800 flex justify-center">
+        <img src="../assets/icon.png" alt="App Creator A to Z" class="w-36 h-36 rounded-xl shadow-lg">
       </div>
 
       <!-- Navigation Links -->
@@ -82,14 +76,8 @@
           <h2 id="page-title" class="text-xl font-semibold">Dashboard</h2>
         </div>
         <div class="flex items-center gap-4">
-          <!-- Theme Toggle -->
-          <button onclick="toggleTheme()" class="p-2 rounded-lg hover:bg-surface-800 transition-colors" title="Toggle Theme">
-            <svg id="theme-icon" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
-          </button>
-          <!-- User/App Version -->
-          <span id="app-version" class="text-xs text-surface-500">v1.0.0</span>
+          <!-- App Version -->
+          <span id="app-version" class="text-sm text-surface-400">v1.0.0</span>
         </div>
       </header>
 
@@ -109,12 +97,12 @@
 
   <!-- Loading Overlay -->
   <div id="loading-overlay" class="fixed inset-0 bg-surface-950/80 backdrop-blur-sm z-50 hidden items-center justify-center">
-    <div class="text-center max-w-md mx-auto px-6">
+    <div class="text-center max-w-4xl w-full mx-auto px-6">
       <div class="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
       <p id="loading-text" class="text-surface-300 mb-2">Loading...</p>
       <p id="loading-joke" class="text-surface-500 text-sm italic"></p>
-      <div id="loading-stream" class="mt-4 text-left bg-surface-800/50 rounded-lg p-4 max-h-48 overflow-y-auto hidden">
-        <p id="loading-stream-text" class="text-surface-300 text-sm whitespace-pre-wrap"></p>
+      <div id="loading-stream" class="mt-6 text-left bg-surface-800/80 rounded-lg p-6 max-h-96 overflow-y-auto hidden border border-surface-700">
+        <p id="loading-stream-text" class="text-surface-300 text-sm whitespace-pre-wrap font-mono leading-relaxed"></p>
       </div>
     </div>
   </div>

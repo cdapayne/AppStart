@@ -39,6 +39,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   // Codex Integration
   runCodexBuild: (config) => ipcRenderer.invoke('codex:build', config),
+  runCloudCodexBuild: (config) => ipcRenderer.invoke('codex:cloudBuild', config),
+
+  // GitHub Integration
+  validateGithubToken: (token) => ipcRenderer.invoke('github:validateToken', token),
+  createGithubRepo: (config) => ipcRenderer.invoke('github:createRepo', config),
+  pushToGithub: (config) => ipcRenderer.invoke('github:push', config),
+  getGithubUser: () => ipcRenderer.invoke('github:getUser'),
 
   // File Operations
   selectImage: () => ipcRenderer.invoke('file:selectImage'),

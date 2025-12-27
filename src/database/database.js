@@ -144,6 +144,111 @@ class AppDatabase {
       // Column already exists, ignore
     }
 
+    // Migration: Add GitHub integration settings
+    try {
+      this.db.exec(`ALTER TABLE settings ADD COLUMN github_token TEXT`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+    try {
+      this.db.exec(`ALTER TABLE settings ADD COLUMN github_visibility TEXT DEFAULT 'private'`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+
+    // Migration: Add AI Agent/Codex integration settings
+    try {
+      this.db.exec(`ALTER TABLE settings ADD COLUMN ai_agent_provider TEXT DEFAULT 'codex'`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+    try {
+      this.db.exec(`ALTER TABLE settings ADD COLUMN codex_default_model TEXT DEFAULT 'codex'`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+    try {
+      this.db.exec(`ALTER TABLE settings ADD COLUMN auto_create_github_repo INTEGER DEFAULT 0`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+    try {
+      this.db.exec(`ALTER TABLE settings ADD COLUMN live_codex_sync INTEGER DEFAULT 0`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+    try {
+      this.db.exec(`ALTER TABLE settings ADD COLUMN step_by_step_instructions INTEGER DEFAULT 1`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+
+    // Migration: Add reasoning_effort and output_verbosity settings
+    try {
+      this.db.exec(`ALTER TABLE settings ADD COLUMN reasoning_effort TEXT DEFAULT 'none'`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+    try {
+      this.db.exec(`ALTER TABLE settings ADD COLUMN output_verbosity TEXT DEFAULT 'medium'`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+
+    // Migration: Add user_tech_stack to settings
+    try {
+      this.db.exec(`ALTER TABLE settings ADD COLUMN user_tech_stack TEXT DEFAULT '[]'`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+
+    // Migration: Add GitHub repo fields to projects
+    try {
+      this.db.exec(`ALTER TABLE projects ADD COLUMN github_repo TEXT`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+    try {
+      this.db.exec(`ALTER TABLE projects ADD COLUMN github_repo_url TEXT`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+
+    // Migration: Add project_tech_stack to projects
+    try {
+      this.db.exec(`ALTER TABLE projects ADD COLUMN project_tech_stack TEXT DEFAULT '[]'`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+
+    // Migration: Add projects_folder to settings
+    try {
+      this.db.exec(`ALTER TABLE settings ADD COLUMN projects_folder TEXT`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+
+    // Migration: Add font_size to settings
+    try {
+      this.db.exec(`ALTER TABLE settings ADD COLUMN font_size INTEGER DEFAULT 16`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+
+    // Migration: Add development_progress to projects
+    try {
+      this.db.exec(`ALTER TABLE projects ADD COLUMN development_progress INTEGER DEFAULT 0`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+
+    // Migration: Add completed_steps to projects to store step completion state
+    try {
+      this.db.exec(`ALTER TABLE projects ADD COLUMN completed_steps TEXT DEFAULT '[]'`);
+    } catch (e) {
+      // Column already exists, ignore
+    }
+
     // Insert default settings if not exists
     const settingsExist = this.db.prepare('SELECT COUNT(*) as count FROM settings').get();
     if (settingsExist.count === 0) {
@@ -162,6 +267,8 @@ class AppDatabase {
         theme: row.theme,
         branding: row.branding,
         aiModel: row.ai_model,
+        reasoningEffort: row.reasoning_effort || 'none',
+        outputVerbosity: row.output_verbosity || 'medium',
         enableAiPlanning: !!row.enable_ai_planning,
         enableAiAdjustments: !!row.enable_ai_adjustments,
         enableAiStoreContent: !!row.enable_ai_store_content,
@@ -170,6 +277,19 @@ class AppDatabase {
         autoSave: !!row.auto_save,
         notificationEnabled: !!row.notification_enabled,
         experimentalCodex: !!row.experimental_codex,
+        // GitHub Integration
+        githubToken: row.github_token,
+        githubVisibility: row.github_visibility || 'private',
+        // AI Agent/Codex Integration
+        aiAgentProvider: row.ai_agent_provider || 'codex',
+        codexDefaultModel: row.codex_default_model || 'codex',
+        autoCreateGithubRepo: !!row.auto_create_github_repo,
+        liveCodexSync: !!row.live_codex_sync,
+        stepByStepInstructions: row.step_by_step_instructions !== 0,
+        // Tech Stack Preferences
+        userTechStack: row.user_tech_stack ? JSON.parse(row.user_tech_stack) : [],
+        // Font Size
+        fontSize: row.font_size || 16,
       };
     }
     return null;
@@ -226,6 +346,55 @@ class AppDatabase {
     if (settings.experimentalCodex !== undefined) {
       updates.push('experimental_codex = @experimentalCodex');
       params.experimentalCodex = settings.experimentalCodex ? 1 : 0;
+    }
+    // GitHub Integration
+    if (settings.githubToken !== undefined) {
+      updates.push('github_token = @githubToken');
+      params.githubToken = settings.githubToken;
+    }
+    if (settings.githubVisibility !== undefined) {
+      updates.push('github_visibility = @githubVisibility');
+      params.githubVisibility = settings.githubVisibility;
+    }
+    // AI Agent/Codex Integration
+    if (settings.aiAgentProvider !== undefined) {
+      updates.push('ai_agent_provider = @aiAgentProvider');
+      params.aiAgentProvider = settings.aiAgentProvider;
+    }
+    if (settings.codexDefaultModel !== undefined) {
+      updates.push('codex_default_model = @codexDefaultModel');
+      params.codexDefaultModel = settings.codexDefaultModel;
+    }
+    if (settings.autoCreateGithubRepo !== undefined) {
+      updates.push('auto_create_github_repo = @autoCreateGithubRepo');
+      params.autoCreateGithubRepo = settings.autoCreateGithubRepo ? 1 : 0;
+    }
+    if (settings.liveCodexSync !== undefined) {
+      updates.push('live_codex_sync = @liveCodexSync');
+      params.liveCodexSync = settings.liveCodexSync ? 1 : 0;
+    }
+    if (settings.stepByStepInstructions !== undefined) {
+      updates.push('step_by_step_instructions = @stepByStepInstructions');
+      params.stepByStepInstructions = settings.stepByStepInstructions ? 1 : 0;
+    }
+    // Reasoning settings
+    if (settings.reasoningEffort !== undefined) {
+      updates.push('reasoning_effort = @reasoningEffort');
+      params.reasoningEffort = settings.reasoningEffort;
+    }
+    if (settings.outputVerbosity !== undefined) {
+      updates.push('output_verbosity = @outputVerbosity');
+      params.outputVerbosity = settings.outputVerbosity;
+    }
+    // Tech stack settings
+    if (settings.userTechStack !== undefined) {
+      updates.push('user_tech_stack = @userTechStack');
+      params.userTechStack = JSON.stringify(settings.userTechStack);
+    }
+    // Font size setting
+    if (settings.fontSize !== undefined) {
+      updates.push('font_size = @fontSize');
+      params.fontSize = settings.fontSize;
     }
 
     if (updates.length > 0) {
@@ -298,13 +467,23 @@ class AppDatabase {
       iconPath: 'icon_path',
       marketingData: 'marketing_data',
       pitch: 'pitch',
+      projectTechStack: 'project_tech_stack',
+      developmentProgress: 'development_progress',
+      completedSteps: 'completed_steps',
+      // GitHub Integration
+      githubRepo: 'github_repo',
+      githubRepoName: 'github_repo_name',
+      githubConnectedCodex: 'github_connected_codex',
     };
 
     for (const [jsKey, dbKey] of Object.entries(fieldMap)) {
       if (data[jsKey] !== undefined) {
         let value = data[jsKey];
-        if (typeof value === 'object') {
+        if (typeof value === 'object' && value !== null) {
           value = JSON.stringify(value);
+        }
+        if (typeof value === 'boolean') {
+          value = value ? 1 : 0;
         }
         updates.push(`${dbKey} = @${jsKey}`);
         params[jsKey] = value;
@@ -473,6 +652,13 @@ class AppDatabase {
       iconPath: row.icon_path,
       marketingData: this._safeJsonParse(row.marketing_data, null),
       pitch: this._safeJsonParse(row.pitch, null),
+      projectTechStack: this._safeJsonParse(row.project_tech_stack, []),
+      developmentProgress: row.development_progress || 0,
+      completedSteps: this._safeJsonParse(row.completed_steps, []),
+      // GitHub Integration
+      githubRepo: row.github_repo,
+      githubRepoName: row.github_repo_name,
+      githubConnectedCodex: !!row.github_connected_codex,
       createdAt: row.created_at,
       updatedAt: row.updated_at,
     };

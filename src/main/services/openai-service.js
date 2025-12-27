@@ -697,8 +697,15 @@ ${projectData.appDescription || 'No description provided'}
 
 **Monetization Model:** ${projectData.monetization || 'Free'}
 
+**Preferred Tech Stack:** ${(projectData.projectTechStack || []).join(', ') || 'Let AI decide'}
+
+${(projectData.projectTechStack && projectData.projectTechStack.length > 0) 
+  ? `**IMPORTANT:** The user has specifically selected these technologies for this project. You MUST prioritize and recommend these technologies in your tech stack. Only suggest alternatives if there's a critical technical reason why a selected technology won't work for this specific use case, and explain why.`
+  : `**Note:** No specific tech stack was selected. Please recommend the best technologies for this project based on the requirements, target audience, and monetization model.`}
+
 Please provide a detailed development plan in the following JSON structure:
 {
+  "suggestedName": "A catchy, brandable name for the app",
   "overview": "A comprehensive overview of the app and what it will achieve",
   "keyFeatures": ["Feature 1", "Feature 2", ...],
   "techStack": {
@@ -708,7 +715,7 @@ Please provide a detailed development plan in the following JSON structure:
     "hosting": ["Recommended hosting/deployment options"],
     "thirdParty": ["Third-party services/APIs to integrate"]
   },
-  "agentInstructions": "Detailed instructions for AI coding agents to build this app",
+  "agentInstructions": "IMPORTANT: Format as numbered steps that can be executed one at a time. Each step should be self-contained and verifiable. Use this EXACT format:\n\n## Step 1: [Title]\n**Goal:** What this step accomplishes\n**Instructions:**\n- Specific instruction 1\n- Specific instruction 2\n**Files to create/modify:**\n- filename.ext: description\n**Verification:** How to test this step works (e.g., 'Run npm start and verify the server starts on port 3000')\n\n## Step 2: [Title]\n... and so on for each step. Include 5-10 steps covering: project setup, core structure, main features, styling, testing, and deployment prep.",
   "checklist": {
     "items": [
       {

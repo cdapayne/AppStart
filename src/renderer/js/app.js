@@ -84,6 +84,86 @@ const MonetizationOptions = [
   { id: 'ads', name: 'Ad-Supported', description: 'Free with advertisements', icon: '📺' }
 ];
 
+const TechStackOptions = [
+  { id: 'react', name: 'React', category: 'Frontend', icon: '⚛️' },
+  { id: 'vue', name: 'Vue.js', category: 'Frontend', icon: '🎨' },
+  { id: 'angular', name: 'Angular', category: 'Frontend', icon: '🅰️' },
+  { id: 'svelte', name: 'Svelte', category: 'Frontend', icon: '🔥' },
+  { id: 'nextjs', name: 'Next.js', category: 'Full Stack', icon: '🚀' },
+  { id: 'nuxtjs', name: 'Nuxt.js', category: 'Full Stack', icon: '💚' },
+  { id: 'electron', name: 'Electron', category: 'Desktop', icon: '💻' },
+  { id: 'react-native', name: 'React Native', category: 'Mobile', icon: '📱' },
+  { id: 'flutter', name: 'Flutter', category: 'Mobile', icon: '🐦' },
+  { id: 'swift', name: 'Swift', category: 'Mobile', icon: '' },
+  { id: 'kotlin', name: 'Kotlin', category: 'Mobile', icon: '🤖' },
+  { id: 'nodejs', name: 'Node.js', category: 'Backend', icon: '⚙️' },
+  { id: 'python', name: 'Python', category: 'Backend', icon: '🐍' },
+  { id: 'ruby-on-rails', name: 'Ruby on Rails', category: 'Backend', icon: '💎' },
+  { id: 'django', name: 'Django', category: 'Backend', icon: '🎸' },
+  { id: 'laravel', name: 'Laravel', category: 'Backend', icon: '🐘' },
+  { id: 'postgresql', name: 'PostgreSQL', category: 'Database', icon: '🐘' },
+  { id: 'mongodb', name: 'MongoDB', category: 'Database', icon: '🍃' },
+  { id: 'firebase', name: 'Firebase', category: 'Backend', icon: '🔥' },
+  { id: 'aws', name: 'AWS', category: 'Cloud', icon: '☁️' },
+  { id: 'gcp', name: 'Google Cloud', category: 'Cloud', icon: '☁️' },
+  { id: 'azure', name: 'Azure', category: 'Cloud', icon: '☁️' },
+  { id: 'html', name: 'HTML', category: 'Frontend', icon: '🌐' },
+  { id: 'javascript', name: 'JavaScript', category: 'Frontend', icon: '📜' },
+  { id: 'bootstrap', name: 'Bootstrap', category: 'Frontend', icon: '🅱️' },
+  { id: 'android-java', name: 'Android (Java)', category: 'Mobile', icon: '☕' },
+  { id: 'sqlite', name: 'SQLite', category: 'Database', icon: '💾' },
+  { id: 'mysql', name: 'MySQL', category: 'Database', icon: '🐬' },
+  { id: 'csharp', name: 'C#', category: 'Backend', icon: '💜' },
+  { id: 'dotnet', name: '.NET', category: 'Backend', icon: '🔵' },
+  { id: 'express', name: 'Express.js', category: 'Backend', icon: '🚂' },
+  { id: 'iis', name: 'IIS', category: 'Backend', icon: '🖥️' },
+  { id: 'asp-mvc', name: 'ASP.NET MVC', category: 'Backend', icon: '🌐' },
+  { id: 'wpf', name: 'WPF', category: 'Desktop', icon: '🪟' },
+  { id: 'winforms', name: 'WinForms', category: 'Desktop', icon: '📱' },
+  { id: 'unity', name: 'Unity', category: 'Game Engine', icon: '🎮' },
+  { id: 'unreal', name: 'Unreal Engine', category: 'Game Engine', icon: '🎯' },
+  { id: 'openai', name: 'OpenAI API', category: 'API/Services', icon: '🤖' },
+  { id: 'google-maps', name: 'Google Maps API', category: 'API/Services', icon: '🗺️' },
+  { id: 'realm', name: 'Realm (MongoDB)', category: 'Database', icon: '🔮' },
+  { id: 'typescript', name: 'TypeScript', category: 'Frontend', icon: '💙' },
+  { id: 'css', name: 'CSS', category: 'Frontend', icon: '🎨' },
+  { id: 'tailwind', name: 'Tailwind CSS', category: 'Frontend', icon: '💨' },
+  { id: 'jquery', name: 'jQuery', category: 'Frontend', icon: '📚' },
+  { id: 'swiftui', name: 'SwiftUI', category: 'Mobile', icon: '🍎' },
+  { id: 'fastapi', name: 'FastAPI', category: 'Backend', icon: '⚡' },
+  { id: 'php', name: 'PHP', category: 'Backend', icon: '🐘' },
+  { id: 'java', name: 'Java', category: 'Backend', icon: '☕' },
+  { id: 'spring-boot', name: 'Spring Boot', category: 'Backend', icon: '🍃' },
+  { id: 'go', name: 'Go', category: 'Backend', icon: '🔵' },
+  { id: 'rust', name: 'Rust', category: 'Backend', icon: '🦀' },
+  { id: 'supabase', name: 'Supabase', category: 'Backend', icon: '⚡' },
+  { id: 'redis', name: 'Redis', category: 'Database', icon: '🔴' },
+  { id: 'godot', name: 'Godot', category: 'Game Engine', icon: '🤖' },
+  { id: 'heroku', name: 'Heroku', category: 'Cloud', icon: '💜' },
+  { id: 'vercel', name: 'Vercel', category: 'Cloud', icon: '▲' },
+  { id: 'netlify', name: 'Netlify', category: 'Cloud', icon: '🌊' },
+  { id: 'digitalocean', name: 'DigitalOcean', category: 'Cloud', icon: '🌊' },
+  { id: 'docker', name: 'Docker', category: 'DevOps', icon: '🐳' },
+  { id: 'kubernetes', name: 'Kubernetes', category: 'DevOps', icon: '☸️' },
+  { id: 'graphql', name: 'GraphQL', category: 'API/Services', icon: '◬' },
+  { id: 'rest-api', name: 'REST API', category: 'API/Services', icon: '🔌' },
+  { id: 'stripe', name: 'Stripe API', category: 'API/Services', icon: '💳' },
+  { id: 'twilio', name: 'Twilio', category: 'API/Services', icon: '📱' },
+  { id: 'sendgrid', name: 'SendGrid', category: 'API/Services', icon: '📧' },
+  { id: 'auth0', name: 'Auth0', category: 'API/Services', icon: '🔐' },
+  { id: 'd3', name: 'D3.js', category: 'Data Visualization', icon: '📊' },
+  { id: 'amcharts', name: 'amCharts', category: 'Data Visualization', icon: '📈' },
+  { id: 'chartjs', name: 'Chart.js', category: 'Data Visualization', icon: '📉' },
+  { id: 'highcharts', name: 'Highcharts', category: 'Data Visualization', icon: '📊' },
+  { id: 'plotly', name: 'Plotly', category: 'Data Visualization', icon: '📈' },
+  { id: 'recharts', name: 'Recharts', category: 'Data Visualization', icon: '📊' },
+  { id: 'paypal', name: 'PayPal', category: 'Payments', icon: '💰' },
+  { id: 'square', name: 'Square', category: 'Payments', icon: '⬛' },
+  { id: 'braintree', name: 'Braintree', category: 'Payments', icon: '🌳' },
+  { id: 'plaid', name: 'Plaid', category: 'Payments', icon: '🏦' },
+  { id: 'razorpay', name: 'Razorpay', category: 'Payments', icon: '💳' },
+];
+
 const Stores = [
   { 
     id: 'apple', 
@@ -206,6 +286,9 @@ async function initializeApp() {
     
     // Apply theme
     applyTheme(AppState.settings?.theme || 'dark');
+    
+    // Apply font size
+    applyFontSize(AppState.settings?.fontSize || 16);
     
     // Update API status indicator
     updateApiStatus();
@@ -499,6 +582,8 @@ function renderNewProject(container) {
             '<div id="step-3" class="step step-pending">3</div>' +
             '<div id="connector-3-4" class="step-connector"></div>' +
             '<div id="step-4" class="step step-pending">4</div>' +
+            '<div id="connector-4-5" class="step-connector"></div>' +
+            '<div id="step-5" class="step step-pending">5</div>' +
           '</div>' +
         '</div>' +
         '<div class="flex justify-between mt-2 text-xs text-surface-400">' +
@@ -506,6 +591,7 @@ function renderNewProject(container) {
           '<span>Target Market</span>' +
           '<span>Monetization</span>' +
           '<span>Description</span>' +
+          '<span>Tech Stack</span>' +
         '</div>' +
       '</div>' +
       
@@ -619,35 +705,37 @@ function renderNewProject(container) {
           
           '<!-- Step 4: Description -->' +
           '<div id="form-step-4" class="form-step hidden">' +
-            '<h3 class="text-2xl font-bold mb-6">Describe Your App</h3>' +
+            '<h3 class="text-2xl font-bold mb-6">App Description</h3>' +
             '<div class="space-y-6">' +
               '<div>' +
-                '<label class="label">What should your app do? *</label>' +
-                '<textarea id="app-description" class="textarea min-h-[200px]" ' +
-                  'placeholder="Describe your app idea in detail. What problem does it solve? What features should it have? Who is it for? The more detail you provide, the better the AI can help you plan your project." required></textarea>' +
-                '<p class="text-xs text-surface-400 mt-2">Pro tip: Be as detailed as possible. Include features, user flows, and any specific requirements.</p>' +
-              '</div>' +
-              '<div>' +
-                '<label class="label">Any additional notes or requirements?</label>' +
-                '<textarea id="additional-notes" class="textarea" ' +
-                  'placeholder="Optional: Tech stack preferences, design inspirations, competitors to analyze, etc."></textarea>' +
+                '<label class="label">Describe your app in a few sentences *</label>' +
+                '<textarea id="app-description" class="textarea" rows="4" placeholder="e.g., A social network for pet owners to share photos and tips." required></textarea>' +
               '</div>' +
             '</div>' +
             '<div class="flex justify-between mt-8">' +
               '<button type="button" onclick="prevStep(3)" class="btn-secondary">Previous</button>' +
-              '<div class="flex gap-3">' +
-                '<button type="button" onclick="handleNewProjectSubmit(event, false)" class="btn-secondary text-lg px-6">' +
-                  'Create Project' +
-                '</button>' +
-                '<button type="button" onclick="handleNewProjectSubmit(event, true)" class="btn-accent text-lg px-6">' +
-                  '<span class="flex items-center gap-2">' +
-                    '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">' +
-                      '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />' +
-                    '</svg>' +
-                    'Create & Generate Plan' +
-                  '</span>' +
-                '</button>' +
+              '<button type="button" onclick="nextStep(5)" class="btn-primary">Next Step</button>' +
+            '</div>' +
+          '</div>' +
+          
+          '<!-- Step 5: Tech Stack -->' +
+          '<div id="form-step-5" class="form-step hidden">' +
+            '<h3 class="text-2xl font-bold mb-6">Tech Stack</h3>' +
+            '<div class="space-y-6">' +
+              '<div>' +
+                '<label class="label">Choose the technology for your project</label>' +
+                '<p class="text-sm text-surface-400 mb-4">Select your preferred tech stack, or let the AI decide what\'s best.</p>' +
+                '<div class="mb-4">' +
+                  '<button type="button" id="ai-decide-tech" class="btn-secondary">Let AI Decide</button>' +
+                '</div>' +
+                '<div id="project-tech-stack-container" class="max-h-96 overflow-y-auto border border-surface-700 rounded-lg">' +
+                  renderTechStackCheckboxes(AppState.settings?.userTechStack || [], 'project-tech-stack-checkbox') +
+                '</div>' +
               '</div>' +
+            '</div>' +
+            '<div class="flex justify-between mt-8">' +
+              '<button type="button" onclick="prevStep(4)" class="btn-secondary">Previous</button>' +
+              '<button type="submit" class="btn-primary">Create Project</button>' +
             '</div>' +
           '</div>' +
         '</form>' +
@@ -676,6 +764,13 @@ function prevStep(step) {
   updateStepUI();
 }
 
+function clearTechStack() {
+  document.querySelectorAll('#project-tech-stack-container .project-tech-stack-checkbox').forEach(function(checkbox) {
+    checkbox.checked = false;
+  });
+  showToast('Tech stack cleared. AI will decide the best technologies.', 'success');
+}
+
 function updateStepUI() {
   // Hide all steps
   document.querySelectorAll('.form-step').forEach(function(el) {
@@ -686,7 +781,7 @@ function updateStepUI() {
   document.getElementById('form-step-' + currentStep).classList.remove('hidden');
   
   // Update step indicators
-  for (var i = 1; i <= 4; i++) {
+  for (var i = 1; i <= 5; i++) {
     var stepEl = document.getElementById('step-' + i);
     stepEl.classList.remove('step-active', 'step-complete', 'step-pending');
     
@@ -744,7 +839,8 @@ async function handleNewProjectSubmit(event, generatePlan = false) {
     ageRangeMax: parseInt(document.getElementById('age-max').value),
     monetization: document.querySelector('input[name="monetization"]:checked').value,
     appDescription: document.getElementById('app-description').value,
-    description: document.getElementById('additional-notes').value
+    description: document.getElementById('app-description').value,
+    projectTechStack: Array.from(document.querySelectorAll('#project-tech-stack-container .tech-stack-checkbox:checked')).map(el => el.value)
   };
   
   // Validate required fields
@@ -874,14 +970,27 @@ function renderProjectView(container, project) {
           '</div>' +
         '</div>' +
         
-        '<!-- Progress Bar -->' +
-        '<div class="mt-6 pt-6 border-t border-surface-700">' +
-          '<div class="flex items-center justify-between text-sm mb-2">' +
-            '<span class="text-surface-400">Overall Progress</span>' +
-            '<span class="font-semibold">' + progress + '%</span>' +
+        '<!-- Progress Bars -->' +
+        '<div class="mt-6 pt-6 border-t border-surface-700 space-y-4">' +
+          '<div>' +
+            '<div class="flex items-center justify-between text-sm mb-2">' +
+              '<span class="text-surface-400">Development Progress</span>' +
+              '<span class="font-semibold">' + (project.developmentProgress || 0) + '%</span>' +
+            '</div>' +
+            '<div class="progress-bar h-3">' +
+              '<div class="progress-fill bg-accent-500" style="width: ' + (project.developmentProgress || 0) + '%"></div>' +
+            '</div>' +
+            '<p class="text-xs text-surface-500 mt-1">Based on AI agent steps completed</p>' +
           '</div>' +
-          '<div class="progress-bar h-3">' +
-            '<div class="progress-fill" style="width: ' + progress + '%"></div>' +
+          '<div>' +
+            '<div class="flex items-center justify-between text-sm mb-2">' +
+              '<span class="text-surface-400">Checklist Progress</span>' +
+              '<span class="font-semibold">' + progress + '%</span>' +
+            '</div>' +
+            '<div class="progress-bar h-3">' +
+              '<div class="progress-fill" style="width: ' + progress + '%"></div>' +
+            '</div>' +
+            '<p class="text-xs text-surface-500 mt-1">Based on checklist items completed</p>' +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -985,6 +1094,27 @@ function renderProjectView(container, project) {
             ) +
           '</div>' +
         '</div>' +
+      '</div>' +
+      
+      '<!-- Project Tech Stack -->' +
+      (project.projectTechStack && project.projectTechStack.length > 0 ?
+        '<div class="card p-6 mb-6 mt-6">' +
+          '<h4 class="font-semibold mb-4 flex items-center gap-2">' +
+            '<svg class="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>' +
+            'Selected Tech Stack' +
+          '</h4>' +
+          '<div class="flex flex-wrap gap-2">' +
+            project.projectTechStack.map(function(techId) {
+              var tech = TechStackOptions.find(function(t) { return t.id === techId; });
+              if (tech) {
+                return '<span class="badge bg-surface-700 text-surface-200">' + tech.icon + ' ' + escapeHtml(tech.name) + '</span>';
+              }
+              return '';
+            }).join('') +
+          '</div>' +
+        '</div>' : '') +
+      
+      '<div class="grid grid-cols-2 gap-6">' +
       '</div>' +
     '</div>';
   
@@ -1258,14 +1388,48 @@ function renderProjectPlanning(container, project) {
             '<h3 class="text-xl font-bold mb-4 flex items-center gap-2">' +
               '<svg class="w-6 h-6 text-accent-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>' +
               'AI Agent Instructions' +
+              '<button onclick="toggleInstructionView()" class="ml-auto btn-ghost text-sm" id="instruction-view-toggle">' +
+                '<svg class="w-4 h-4 mr-1 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>' +
+                '<span id="instruction-view-text">Full View</span>' +
+              '</button>' +
             '</h3>' +
-            '<div class="bg-surface-800 rounded-lg p-4 font-mono text-sm text-surface-300 whitespace-pre-wrap overflow-x-auto max-h-96 overflow-y-auto">' +
-              escapeHtml(aiPlan.agentInstructions || project.agentInstructions || 'No agent instructions generated') +
+            
+            '<!-- Full Instructions View (hidden by default) -->' +
+            '<div id="full-instructions-view" class="hidden">' +
+              '<div class="bg-surface-800 rounded-lg p-4 font-mono text-sm text-surface-300 whitespace-pre-wrap overflow-x-auto max-h-96 overflow-y-auto">' +
+                escapeHtml(aiPlan.agentInstructions || project.agentInstructions || 'No agent instructions generated') +
+              '</div>' +
             '</div>' +
+            
+            '<!-- Step-by-Step Instructions View (shown by default) -->' +
+            '<div id="step-instructions-view">' +
+              renderStepByStepInstructions(aiPlan.agentInstructions || project.agentInstructions || '') +
+            '</div>' +
+            
+            '<!-- Development Progress Tracker -->' +
+            '<div class="mt-6 p-4 bg-surface-800/50 rounded-lg border border-surface-700">' +
+              '<div class="flex items-center justify-between mb-3">' +
+                '<label class="font-semibold text-sm">Development Progress</label>' +
+                '<span id="dev-progress-value" class="text-lg font-bold text-accent-400">' + (project.developmentProgress || 0) + '%</span>' +
+              '</div>' +
+              '<input type="range" id="dev-progress-slider" class="w-full" min="0" max="100" step="5" value="' + (project.developmentProgress || 0) + '" oninput="updateDevProgressDisplay(this.value)">' +
+              '<div class="flex justify-between text-xs text-surface-500 mt-2">' +
+                '<span>Not Started</span>' +
+                '<span>In Progress</span>' +
+                '<span>Complete</span>' +
+              '</div>' +
+              '<button onclick="saveDevelopmentProgress()" class="btn-primary w-full mt-3">Save Progress</button>' +
+              '<p class="text-xs text-surface-400 mt-2">Track your progress as you complete the AI agent steps above</p>' +
+            '</div>' +
+            
             '<div class="flex flex-wrap gap-3 mt-4">' +
               '<button onclick="copyToClipboard(AppState.currentProject.aiPlan.agentInstructions || AppState.currentProject.agentInstructions)" class="btn-secondary">' +
                 '<svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>' +
-                'Copy Instructions' +
+                'Copy All Instructions' +
+              '</button>' +
+              '<button onclick="showCreateGithubRepoModal()" class="btn-secondary">' +
+                '<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>' +
+                'Create GitHub Repo' +
               '</button>' +
               (AppState.settings.experimentalCodex ? 
                 '<button onclick="buildWithCodex()" class="btn-primary bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600">' +
@@ -4734,35 +4898,6 @@ function renderSettings(container) {
             '</div>' +
           '</div>' +
           
-          '<!-- Appearance -->' +
-          '<div class="border-b border-surface-700 pb-6">' +
-            '<h4 class="font-semibold mb-4 flex items-center gap-2">' +
-              '<svg class="w-5 h-5 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>' +
-              'Appearance' +
-            '</h4>' +
-            '<div class="space-y-4">' +
-              '<div>' +
-                '<label class="label">Theme</label>' +
-                '<div class="grid grid-cols-4 gap-4">' +
-                  renderThemeOption('dark', 'Dark', settings.theme === 'dark' || !settings.theme) +
-                  renderThemeOption('light', 'Light', settings.theme === 'light') +
-                  renderThemeOption('midnight', 'Midnight', settings.theme === 'midnight') +
-                  renderThemeOption('sunset', 'Sunset', settings.theme === 'sunset') +
-                '</div>' +
-              '</div>' +
-              '<div>' +
-                '<label class="label">Branding</label>' +
-                '<select id="branding" class="select" onchange="applyBrandingInstantly(this.value)">' +
-                  '<option value="default"' + (settings.branding === 'default' ? ' selected' : '') + '>Default (Blue/Purple)</option>' +
-                  '<option value="ocean"' + (settings.branding === 'ocean' ? ' selected' : '') + '>Ocean (Teal/Cyan)</option>' +
-                  '<option value="forest"' + (settings.branding === 'forest' ? ' selected' : '') + '>Forest (Green/Emerald)</option>' +
-                  '<option value="sunset"' + (settings.branding === 'sunset' ? ' selected' : '') + '>Sunset (Orange/Red)</option>' +
-                  '<option value="royal"' + (settings.branding === 'royal' ? ' selected' : '') + '>Royal (Purple/Indigo)</option>' +
-                '</select>' +
-              '</div>' +
-            '</div>' +
-          '</div>' +
-          
           '<!-- General Settings -->' +
           '<div class="border-b border-surface-700 pb-6">' +
             '<h4 class="font-semibold mb-4 flex items-center gap-2">' +
@@ -4772,6 +4907,113 @@ function renderSettings(container) {
             '<div class="space-y-4">' +
               renderToggle('auto-save', 'Auto Save', 'Automatically save changes', settings.autoSave !== false) +
               renderToggle('notifications', 'Notifications', 'Show desktop notifications', settings.notificationEnabled !== false) +
+              '<div>' +
+                '<label class="label">Font Size</label>' +
+                '<div class="flex items-center gap-4">' +
+                  '<span class="text-sm text-surface-400">Small</span>' +
+                  '<input type="range" id="font-size" class="flex-1" min="12" max="20" step="1" value="' + (settings.fontSize || 16) + '" oninput="applyFontSizeInstantly(this.value)">' +
+                  '<span class="text-sm text-surface-400">Large</span>' +
+                  '<span id="font-size-value" class="text-sm font-semibold text-primary-400 min-w-[3rem] text-center">' + (settings.fontSize || 16) + 'px</span>' +
+                '</div>' +
+                '<p class="text-xs text-surface-400 mt-1">Adjust the base font size for the entire application</p>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          
+          '<!-- GitHub Integration -->' +
+          '<div class="border-b border-surface-700 pb-6">' +
+            '<h4 class="font-semibold mb-4 flex items-center gap-2">' +
+              '<svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>' +
+              'GitHub Integration' +
+            '</h4>' +
+            '<div class="space-y-4">' +
+              '<div>' +
+                '<label class="label">GitHub Personal Access Token</label>' +
+                '<div class="flex gap-2">' +
+                  '<input type="password" id="github-token" class="input flex-1" placeholder="ghp_xxxxxxxxxxxx" value="' + (settings.githubToken || '') + '">' +
+                  '<button type="button" onclick="toggleGithubTokenVisibility()" class="btn-ghost">' +
+                    '<svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>' +
+                  '</button>' +
+                  '<button type="button" onclick="validateGithubToken()" class="btn-secondary">Validate</button>' +
+                '</div>' +
+                '<div class="mt-2 p-3 bg-surface-800/50 rounded-lg">' +
+                  '<p class="text-xs text-surface-300 mb-2"><strong>Token Requirements:</strong></p>' +
+                  '<ul class="text-xs text-surface-400 list-disc list-inside space-y-1">' +
+                    '<li><strong>Classic Token:</strong> Enable the <code class="text-primary-400">repo</code> scope</li>' +
+                    '<li><strong>Fine-grained Token:</strong> Set Repository permissions → Administration → Read and write</li>' +
+                  '</ul>' +
+                  '<p class="text-xs text-surface-400 mt-2">Generate at <a href="https://github.com/settings/tokens?type=beta" class="text-primary-400 hover:underline" target="_blank">GitHub Settings → Fine-grained tokens</a> or <a href="https://github.com/settings/tokens/new" class="text-primary-400 hover:underline" target="_blank">Classic tokens</a></p>' +
+                '</div>' +
+              '</div>' +
+              '<div>' +
+                '<label class="label">Default Repository Visibility</label>' +
+                '<select id="github-visibility" class="select">' +
+                  '<option value="private"' + (settings.githubVisibility === 'private' || !settings.githubVisibility ? ' selected' : '') + '>Private</option>' +
+                  '<option value="public"' + (settings.githubVisibility === 'public' ? ' selected' : '') + '>Public</option>' +
+                '</select>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          
+          '<!-- Tech Stack Preferences -->' +
+          '<div class="border-b border-surface-700 pb-6">' +
+            '<h4 class="font-semibold mb-4 flex items-center gap-2">' +
+              '<svg class="w-5 h-5 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>' +
+              'My Preferred Tech Stack' +
+            '</h4>' +
+            '<p class="text-sm text-surface-400 mb-4">Select your favorite technologies. The AI will prioritize these when generating project plans.</p>' +
+            '<div id="tech-stack-container" class="max-h-96 overflow-y-auto border border-surface-700 rounded-lg">' +
+              renderTechStackCheckboxes(settings.userTechStack || []) +
+            '</div>' +
+          '</div>' +
+          
+          '<!-- Codex/AI Agent Integration -->' +
+          '<div class="border-b border-surface-700 pb-6">' +
+            '<h4 class="font-semibold mb-4 flex items-center gap-2">' +
+              '<svg class="w-5 h-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>' +
+              'AI Agent & Codex Integration' +
+            '</h4>' +
+            '<div class="space-y-4">' +
+              '<div>' +
+                '<label class="label">Preferred AI Agent Provider</label>' +
+                '<select id="ai-agent-provider" class="select">' +
+                  '<option value="codex"' + (settings.aiAgentProvider === 'codex' || !settings.aiAgentProvider ? ' selected' : '') + '>OpenAI Codex CLI</option>' +
+                  '<option value="claude"' + (settings.aiAgentProvider === 'claude' ? ' selected' : '') + '>Claude (Anthropic)</option>' +
+                  '<option value="cursor"' + (settings.aiAgentProvider === 'cursor' ? ' selected' : '') + '>Cursor AI</option>' +
+                  '<option value="copilot"' + (settings.aiAgentProvider === 'copilot' ? ' selected' : '') + '>GitHub Copilot</option>' +
+                  '<option value="manual"' + (settings.aiAgentProvider === 'manual' ? ' selected' : '') + '>Manual (Copy Instructions)</option>' +
+                '</select>' +
+                '<p class="text-xs text-surface-400 mt-1">Choose your preferred AI agent for building projects from instructions.</p>' +
+              '</div>' +
+              '<div>' +
+                '<label class="label">Default AI Model</label>' +
+                '<select id="codex-default-model" class="select">' +
+                  '<optgroup label="Codex Optimized (Local + Cloud)">' +
+                    '<option value="gpt-5.1-codex-max"' + (settings.codexDefaultModel === 'gpt-5.1-codex-max' ? ' selected' : '') + '>GPT-5.1 Codex Max (Most Intelligent)</option>' +
+                    '<option value="gpt-5.1-codex"' + (settings.codexDefaultModel === 'gpt-5.1-codex' || settings.codexDefaultModel === 'codex' || !settings.codexDefaultModel ? ' selected' : '') + '>GPT-5.1 Codex (Recommended)</option>' +
+                    '<option value="gpt-5.1-codex-mini"' + (settings.codexDefaultModel === 'gpt-5.1-codex-mini' ? ' selected' : '') + '>GPT-5.1 Codex Mini (Fast)</option>' +
+                    '<option value="gpt-5-codex"' + (settings.codexDefaultModel === 'gpt-5-codex' ? ' selected' : '') + '>GPT-5 Codex (Previous Gen)</option>' +
+                  '</optgroup>' +
+                  '<optgroup label="Frontier Models (Cloud Only)">' +
+                    '<option value="gpt-5.2"' + (settings.codexDefaultModel === 'gpt-5.2' ? ' selected' : '') + '>GPT-5.2 (Best Overall)</option>' +
+                    '<option value="gpt-5"' + (settings.codexDefaultModel === 'gpt-5' ? ' selected' : '') + '>GPT-5 (Reasoning + Coding)</option>' +
+                    '<option value="gpt-5-mini"' + (settings.codexDefaultModel === 'gpt-5-mini' ? ' selected' : '') + '>GPT-5 Mini (Affordable)</option>' +
+                    '<option value="gpt-5-nano"' + (settings.codexDefaultModel === 'gpt-5-nano' ? ' selected' : '') + '>GPT-5 Nano (Fastest)</option>' +
+                  '</optgroup>' +
+                  '<optgroup label="Reasoning Models (Cloud Only)">' +
+                    '<option value="o3"' + (settings.codexDefaultModel === 'o3' ? ' selected' : '') + '>o3 (Complex Reasoning)</option>' +
+                    '<option value="o4-mini"' + (settings.codexDefaultModel === 'o4-mini' ? ' selected' : '') + '>o4-mini (Fast Reasoning)</option>' +
+                  '</optgroup>' +
+                  '<optgroup label="GPT-4 Series (Legacy)">' +
+                    '<option value="gpt-4.1"' + (settings.codexDefaultModel === 'gpt-4.1' ? ' selected' : '') + '>GPT-4.1 (Non-Reasoning)</option>' +
+                    '<option value="gpt-4o"' + (settings.codexDefaultModel === 'gpt-4o' ? ' selected' : '') + '>GPT-4o</option>' +
+                    '<option value="gpt-4o-mini"' + (settings.codexDefaultModel === 'gpt-4o-mini' ? ' selected' : '') + '>GPT-4o Mini</option>' +
+                  '</optgroup>' +
+                '</select>' +
+                '<p class="text-xs text-surface-400 mt-1">Codex models for Local CLI. Others for Cloud builds.</p>' +
+              '</div>' +
+              renderToggle('auto-create-github-repo', 'Auto-Create GitHub Repository', 'Automatically create a GitHub repository when starting a Codex build', settings.autoCreateGithubRepo === true) +
+              renderToggle('live-codex-sync', 'Live Codex Sync', 'Push Codex changes to GitHub repository in real-time', settings.liveCodexSync === true) +
             '</div>' +
           '</div>' +
           
@@ -4787,6 +5029,7 @@ function renderSettings(container) {
             '</div>' +
             '<div class="space-y-4">' +
               renderToggle('experimental-codex', 'Codex Build Integration', 'Enable "Build with Codex" button to generate project code from AI instructions using OpenAI Codex CLI', settings.experimentalCodex === true) +
+              renderToggle('step-by-step-instructions', 'Step-by-Step Agent Instructions', 'Break down AI agent instructions into individual steps with copy buttons', settings.stepByStepInstructions !== false) +
             '</div>' +
           '</div>' +
           
@@ -4803,6 +5046,84 @@ function renderSettings(container) {
   
   // Add form submit handler
   document.getElementById('settings-form').addEventListener('submit', handleSettingsSave);
+}
+
+function renderTechStackCheckboxes(selectedStack, checkboxClass) {
+  selectedStack = selectedStack || [];
+  checkboxClass = checkboxClass || 'tech-stack-checkbox';
+  var searchId = 'tech-search-' + checkboxClass;
+  var containerId = 'tech-list-' + checkboxClass;
+  
+  // Sort technologies alphabetically by name
+  var sortedTech = TechStackOptions.slice().sort(function(a, b) {
+    return a.name.localeCompare(b.name);
+  });
+  
+  // Sort: checked items first, then unchecked (both alphabetically)
+  sortedTech.sort(function(a, b) {
+    var aChecked = selectedStack.includes(a.id);
+    var bChecked = selectedStack.includes(b.id);
+    if (aChecked && !bChecked) return -1;
+    if (!aChecked && bChecked) return 1;
+    return 0;
+  });
+  
+  var html = '' +
+    '<div class="sticky top-0 bg-surface-800 p-3 border-b border-surface-700 z-10">' +
+      '<input type="text" id="' + searchId + '" class="input text-sm" placeholder="🔍 Search technologies..." onkeyup="filterTechStack(\'' + searchId + '\', \'' + containerId + '\')">' +
+    '</div>' +
+    '<div id="' + containerId + '" class="grid grid-cols-3 gap-2 p-3">';
+  
+  sortedTech.forEach(function(tech) {
+    var isChecked = selectedStack.includes(tech.id);
+    html += '' +
+      '<label class="tech-stack-item flex items-center gap-2 p-2 rounded-lg border border-surface-700 hover:bg-surface-800 transition-colors cursor-pointer" data-name="' + tech.name.toLowerCase() + '" data-category="' + tech.category.toLowerCase() + '">' +
+        '<input type="checkbox" class="checkbox ' + checkboxClass + '" value="' + tech.id + '" ' + (isChecked ? 'checked' : '') + ' onchange="reorderTechStack(\'' + containerId + '\')">' +
+        '<span class="text-lg">' + tech.icon + '</span>' +
+        '<div class="flex-1 min-w-0">' +
+          '<span class="font-medium text-xs block truncate">' + tech.name + '</span>' +
+          '<p class="text-xs text-surface-400 truncate">' + tech.category + '</p>' +
+        '</div>' +
+      '</label>';
+  });
+  
+  html += '</div>';
+  return html;
+}
+
+function filterTechStack(searchId, containerId) {
+  var searchValue = document.getElementById(searchId).value.toLowerCase();
+  var container = document.getElementById(containerId);
+  var items = container.getElementsByClassName('tech-stack-item');
+  
+  Array.from(items).forEach(function(item) {
+    var name = item.getAttribute('data-name');
+    var category = item.getAttribute('data-category');
+    if (name.includes(searchValue) || category.includes(searchValue)) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
+function reorderTechStack(containerId) {
+  var container = document.getElementById(containerId);
+  var items = Array.from(container.getElementsByClassName('tech-stack-item'));
+  
+  // Sort items: checked first, then unchecked
+  items.sort(function(a, b) {
+    var aChecked = a.querySelector('input[type="checkbox"]').checked;
+    var bChecked = b.querySelector('input[type="checkbox"]').checked;
+    if (aChecked && !bChecked) return -1;
+    if (!aChecked && bChecked) return 1;
+    return 0;
+  });
+  
+  // Re-append items in sorted order
+  items.forEach(function(item) {
+    container.appendChild(item);
+  });
 }
 
 function renderToggle(id, label, description, checked) {
@@ -4894,16 +5215,30 @@ async function handleSettingsSave(event) {
     enableAiStoreContent: document.getElementById('enable-store-content').classList.contains('toggle-active'),
     enableAiKeywords: document.getElementById('enable-keywords').classList.contains('toggle-active'),
     enableAiTaglines: document.getElementById('enable-taglines').classList.contains('toggle-active'),
-    theme: document.querySelector('input[name="theme"]:checked').value,
-    branding: document.getElementById('branding').value,
+    theme: 'dark',
+    branding: 'default',
     autoSave: document.getElementById('auto-save').classList.contains('toggle-active'),
     notificationEnabled: document.getElementById('notifications').classList.contains('toggle-active'),
-    experimentalCodex: document.getElementById('experimental-codex').classList.contains('toggle-active')
+    experimentalCodex: document.getElementById('experimental-codex').classList.contains('toggle-active'),
+    // GitHub Integration
+    githubToken: document.getElementById('github-token').value,
+    githubVisibility: document.getElementById('github-visibility').value,
+    // Codex/AI Agent Integration
+    aiAgentProvider: document.getElementById('ai-agent-provider').value,
+    codexDefaultModel: document.getElementById('codex-default-model').value,
+    autoCreateGithubRepo: document.getElementById('auto-create-github-repo').classList.contains('toggle-active'),
+    liveCodexSync: document.getElementById('live-codex-sync').classList.contains('toggle-active'),
+    stepByStepInstructions: document.getElementById('step-by-step-instructions').classList.contains('toggle-active'),
+    // Tech Stack Preferences
+    userTechStack: Array.from(document.querySelectorAll('.tech-stack-checkbox:checked')).map(el => el.value),
+    // Font Size
+    fontSize: parseInt(document.getElementById('font-size').value)
   };
   
   try {
     AppState.settings = await window.electronAPI.updateSettings(settings);
     applyTheme(settings.theme);
+    applyFontSize(settings.fontSize);
     updateApiStatus();
     showToast('Settings saved successfully!', 'success');
   } catch (error) {
@@ -4951,6 +5286,44 @@ function calculateProjectProgress(project) {
   }
   var completed = project.checklist.items.filter(function(item) { return item.completed; }).length;
   return Math.round((completed / project.checklist.items.length) * 100);
+}
+
+// Update the display value as slider moves
+function updateDevProgressDisplay(value) {
+  var displayEl = document.getElementById('dev-progress-value');
+  if (displayEl) {
+    displayEl.textContent = value + '%';
+  }
+}
+
+// Save development progress to database
+async function saveDevelopmentProgress() {
+  var slider = document.getElementById('dev-progress-slider');
+  if (!slider || !AppState.currentProject) return;
+  
+  var newProgress = parseInt(slider.value);
+  await updateDevelopmentProgress(AppState.currentProject, newProgress);
+  
+  // Update the progress bars in the overview
+  renderProjects();
+  
+  showToast('Development progress saved!', 'success');
+}
+
+async function updateDevelopmentProgress(project, newProgress) {
+  try {
+    await window.electronAPI.updateProject(project.id, { developmentProgress: newProgress });
+    project.developmentProgress = newProgress;
+    AppState.currentProject = project;
+    
+    // Update project in the list
+    var projectIndex = AppState.projects.findIndex(function(p) { return p.id === project.id; });
+    if (projectIndex !== -1) {
+      AppState.projects[projectIndex].developmentProgress = newProgress;
+    }
+  } catch (error) {
+    console.error('Failed to update development progress:', error);
+  }
 }
 
 async function duplicateProject(projectId) {
@@ -5053,6 +5426,13 @@ function editProjectBasics() {
         <label class="label">Additional Notes & Requirements</label>
         <textarea id="edit-additional-notes" class="textarea" placeholder="Tech stack preferences, design inspirations, competitors to analyze, etc.">${escapeHtml(project.description || '')}</textarea>
       </div>
+      <div>
+        <label class="label">Project Tech Stack</label>
+        <p class="text-sm text-surface-400 mb-4">Select the technologies you want to use for this project.</p>
+        <div id="edit-tech-stack-container" class="grid grid-cols-1 gap-4 max-h-64 overflow-y-auto p-4 bg-surface-800/50 rounded-lg">
+          <!-- Tech stack checkboxes will be rendered here -->
+        </div>
+      </div>
       <div class="pt-4 border-t border-surface-700">
         <button type="button" onclick="closeModal(); editLiveStoreLinks();" class="btn-ghost w-full justify-center">
           <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
@@ -5070,6 +5450,14 @@ function editProjectBasics() {
       { text: 'Save Changes', class: 'btn-primary', onclick: 'handleProjectUpdate()' }
     ]
   );
+  
+  // Render tech stack checkboxes after modal is shown
+  setTimeout(() => {
+    const container = document.getElementById('edit-tech-stack-container');
+    if (container) {
+      container.innerHTML = renderTechStackCheckboxes(project.projectTechStack || [], 'edit-tech-stack-checkbox');
+    }
+  }, 0);
 }
 
 async function uploadEditProjectIcon() {
@@ -5107,7 +5495,8 @@ async function handleProjectUpdate() {
     category: document.getElementById('edit-project-category').value,
     subcategory: document.getElementById('edit-project-subcategory').value,
     description: document.getElementById('edit-additional-notes').value,
-    iconPath: iconPath || project.iconPath || null
+    iconPath: iconPath || project.iconPath || null,
+    projectTechStack: Array.from(document.querySelectorAll('.edit-tech-stack-checkbox:checked')).map(el => el.value)
   };
 
   if (!updatedData.name || !updatedData.appDescription || !updatedData.category) {
@@ -5174,6 +5563,22 @@ function applyTheme(theme) {
   }
   
   updateThemeIcon(theme);
+}
+
+function applyFontSize(fontSize) {
+  fontSize = fontSize || 16;
+  document.documentElement.style.fontSize = fontSize + 'px';
+}
+
+function applyFontSizeInstantly(fontSize) {
+  fontSize = parseInt(fontSize) || 16;
+  applyFontSize(fontSize);
+  
+  // Update the display value
+  var display = document.getElementById('font-size-value');
+  if (display) {
+    display.textContent = fontSize + 'px';
+  }
 }
 
 function applyThemeInstantly(theme) {
@@ -5441,6 +5846,667 @@ function copyToClipboard(text) {
   });
 }
 
+// ==================== Step-by-Step Instructions ====================
+function renderStepByStepInstructions(instructions) {
+  if (!instructions || instructions.trim().length === 0) {
+    return '<p class="text-surface-400 text-center py-4">No instructions available</p>';
+  }
+  
+  // Parse instructions into steps
+  var steps = parseInstructionsToSteps(instructions);
+  
+  // Restore completed steps from database if available
+  if (AppState.currentProject && AppState.currentProject.completedSteps) {
+    var completedIndices = AppState.currentProject.completedSteps;
+    completedIndices.forEach(function(index) {
+      if (steps[index]) {
+        steps[index].completed = true;
+      }
+    });
+  }
+  
+  if (steps.length === 0) {
+    return '<div class="bg-surface-800 rounded-lg p-4 font-mono text-sm text-surface-300 whitespace-pre-wrap">' +
+      escapeHtml(instructions) +
+    '</div>';
+  }
+  
+  // Progress bar
+  var completedCount = steps.filter(function(s) { return s.completed; }).length;
+  var progressPercent = Math.round((completedCount / steps.length) * 100);
+  
+  var html = '' +
+    '<div class="mb-4 p-4 bg-surface-800 rounded-lg">' +
+      '<div class="flex items-center justify-between mb-2">' +
+        '<span class="text-sm font-medium">Progress: ' + completedCount + ' / ' + steps.length + ' steps</span>' +
+        '<span class="text-sm text-primary-400">' + progressPercent + '%</span>' +
+      '</div>' +
+      '<div class="w-full bg-surface-700 rounded-full h-2">' +
+        '<div class="bg-gradient-to-r from-primary-500 to-accent-500 h-2 rounded-full transition-all duration-300" style="width: ' + progressPercent + '%"></div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="space-y-4">';
+  
+  steps.forEach(function(step, index) {
+    var stepId = 'step-' + index;
+    var isCompleted = step.completed;
+    var statusClass = isCompleted ? 'border-blue-500/30 bg-blue-500/10' : 'border-surface-700 bg-surface-800/50';
+    var statusIcon = isCompleted ? 
+      '<svg class="w-6 h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>' :
+      '<span class="w-7 h-7 rounded-full bg-primary-500/20 text-primary-400 font-bold text-sm flex items-center justify-center">' + (index + 1) + '</span>';
+    
+    // Parse step content for special sections
+    var goalMatch = step.content.match(/\*\*Goal:\*\*\s*([^\n*]+)/i);
+    var verificationMatch = step.content.match(/\*\*Verification:\*\*\s*([^\n]+(?:\n(?!\*\*)[^\n]+)*)/i);
+    var filesMatch = step.content.match(/\*\*Files to create\/modify:\*\*\s*([\s\S]*?)(?=\*\*|$)/i);
+    
+    var goalHtml = goalMatch ? 
+      '<div class="mb-3 p-2 bg-blue-500/10 border border-blue-500/20 rounded">' +
+        '<span class="text-xs text-blue-400 font-semibold">GOAL:</span> ' +
+        '<span class="text-sm text-blue-300">' + escapeHtml(goalMatch[1].trim()) + '</span>' +
+      '</div>' : '';
+    
+    var verificationHtml = verificationMatch ?
+      '<div class="mt-3 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded">' +
+        '<div class="flex items-start gap-2">' +
+          '<svg class="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>' +
+          '<div>' +
+            '<span class="text-xs text-yellow-400 font-semibold block mb-1">HOW TO VERIFY:</span>' +
+            '<span class="text-sm text-yellow-200">' + escapeHtml(verificationMatch[1].trim()) + '</span>' +
+          '</div>' +
+        '</div>' +
+      '</div>' : '';
+    
+    // Clean content - remove the special sections for display
+    var cleanContent = step.content
+      .replace(/\*\*Goal:\*\*\s*[^\n]+\n?/gi, '')
+      .replace(/\*\*Verification:\*\*\s*[^\n]+(?:\n(?!\*\*)[^\n]+)*/gi, '')
+      .trim();
+    
+    // Expand first incomplete step, or first step if all complete
+    var isExpanded = false;
+    var firstIncompleteIndex = steps.findIndex(function(s) { return !s.completed; });
+    if (firstIncompleteIndex === -1) firstIncompleteIndex = 0;
+    isExpanded = (index === firstIncompleteIndex);
+    
+    var expandedClass = isExpanded ? '' : 'hidden';
+    var rotateClass = isExpanded ? 'rotate-180' : '';
+    
+    html += '' +
+      '<div class="border rounded-lg ' + statusClass + ' overflow-hidden transition-all duration-200" id="' + stepId + '">' +
+        '<div class="flex items-center justify-between p-4 border-b border-surface-700/50 cursor-pointer" onclick="toggleStepExpand(' + index + ')">' +
+          '<div class="flex items-center gap-3">' +
+            statusIcon +
+            '<div>' +
+              '<h4 class="font-semibold ' + (isCompleted ? 'text-blue-400' : '') + '">' + escapeHtml(step.title || 'Step ' + (index + 1)) + '</h4>' +
+              (goalMatch ? '<p class="text-xs text-surface-400 mt-0.5">' + escapeHtml(goalMatch[1].trim().substring(0, 80)) + (goalMatch[1].length > 80 ? '...' : '') + '</p>' : '') +
+            '</div>' +
+          '</div>' +
+          '<div class="flex items-center gap-2">' +
+            '<button onclick="event.stopPropagation(); runStepWithCodex(' + index + ')" class="btn-ghost text-sm px-3 py-1.5 text-pink-400 hover:bg-pink-500/10" title="Run this step with Codex">' +
+              '<svg class="w-4 h-4 mr-1 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>' +
+              'Run' +
+            '</button>' +
+            '<button onclick="event.stopPropagation(); copyStepToClipboard(' + index + ')" class="btn-ghost text-sm px-3 py-1.5">' +
+              '<svg class="w-4 h-4 mr-1 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>' +
+              'Copy' +
+            '</button>' +
+            '<button onclick="event.stopPropagation(); toggleStepComplete(' + index + ')" class="btn-ghost text-sm px-3 py-1.5 ' + (isCompleted ? 'text-blue-400 bg-blue-500/10' : '') + '">' +
+              '<svg class="w-4 h-4 mr-1 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>' +
+              (isCompleted ? 'Done ✓' : 'Mark Done') +
+            '</button>' +
+            '<svg class="w-5 h-5 transform transition-transform text-surface-400 ' + rotateClass + '" fill="none" viewBox="0 0 24 24" stroke="currentColor" id="expand-icon-' + index + '"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>' +
+          '</div>' +
+        '</div>' +
+        '<div class="p-4 ' + expandedClass + '" id="step-content-' + index + '">' +
+          goalHtml +
+          '<div class="font-mono text-sm text-surface-300 whitespace-pre-wrap">' +
+            escapeHtml(cleanContent) +
+          '</div>' +
+          verificationHtml +
+        '</div>' +
+      '</div>';
+  });
+  
+  html += '</div>';
+  
+  // Store steps in global state for later use
+  window.currentInstructionSteps = steps;
+  
+  return html;
+}
+
+function parseInstructionsToSteps(instructions) {
+  var steps = [];
+  var lines = instructions.split('\n');
+  var currentStep = null;
+  
+  // Patterns to match step headers (in order of priority)
+  var stepPatterns = [
+    /^##\s*Step\s*(\d+)[.:)]\s*(.+)$/i,        // ## Step 1: Title
+    /^###\s*Step\s*(\d+)[.:)]\s*(.+)$/i,       // ### Step 1: Title  
+    /^##?\s*(?:Step\s*)?(\d+)[.:)]\s*(.*)$/i,  // ## 1. Title or Step 1: Title
+    /^(\d+)[.:)]\s+(.+)$/,                      // 1. Title or 1) Title
+    /^\*\*Step\s*(\d+)[.:)?\s]*(.*)?\*\*$/i,   // **Step 1: Title**
+    /^###?\s+(.+)$/                             // ### Title (generic heading)
+  ];
+  
+  lines.forEach(function(line) {
+    var matched = false;
+    
+    for (var i = 0; i < stepPatterns.length; i++) {
+      var match = line.match(stepPatterns[i]);
+      if (match) {
+        // Save previous step if exists
+        if (currentStep) {
+          // Clean up content - trim trailing whitespace
+          currentStep.content = currentStep.content.trim();
+          steps.push(currentStep);
+        }
+        
+        // Start new step
+        var title = match[2] || match[1] || 'Step ' + (steps.length + 1);
+        currentStep = {
+          title: title.trim(),
+          content: '',
+          completed: false
+        };
+        matched = true;
+        break;
+      }
+    }
+    
+    if (!matched && currentStep) {
+      currentStep.content += (currentStep.content ? '\n' : '') + line;
+    } else if (!matched && !currentStep && line.trim()) {
+      // First content before any step heading - could be an overview
+      // Skip if it's just the "AI Agent Instructions" header
+      if (!line.match(/^#?\s*AI Agent Instructions/i)) {
+        currentStep = {
+          title: 'Overview',
+          content: line,
+          completed: false
+        };
+      }
+    }
+  });
+  
+  // Don't forget the last step
+  if (currentStep) {
+    currentStep.content = currentStep.content.trim();
+    steps.push(currentStep);
+  }
+  
+  // If no steps were parsed, create a single step with all content
+  if (steps.length === 0 && instructions.trim()) {
+    steps.push({
+      title: 'Instructions',
+      content: instructions,
+      completed: false
+    });
+  }
+  
+  return steps;
+}
+
+function copyStepToClipboard(stepIndex) {
+  var steps = window.currentInstructionSteps || [];
+  if (stepIndex < steps.length) {
+    var step = steps[stepIndex];
+    var text = '## ' + step.title + '\n\n' + step.content;
+    copyToClipboard(text);
+  }
+}
+
+function toggleStepComplete(stepIndex) {
+  var steps = window.currentInstructionSteps || [];
+  if (stepIndex < steps.length) {
+    steps[stepIndex].completed = !steps[stepIndex].completed;
+    var isCompleted = steps[stepIndex].completed;
+    
+    // Update the step card styling
+    var stepEl = document.getElementById('step-' + stepIndex);
+    if (stepEl) {
+      if (isCompleted) {
+        stepEl.classList.remove('border-surface-700', 'bg-surface-800/50');
+        stepEl.classList.add('border-blue-500/30', 'bg-blue-500/10');
+      } else {
+        stepEl.classList.remove('border-blue-500/30', 'bg-blue-500/10');
+        stepEl.classList.add('border-surface-700', 'bg-surface-800/50');
+      }
+      
+      // Update the title color
+      var titleEl = stepEl.querySelector('h4');
+      if (titleEl) {
+        if (isCompleted) {
+          titleEl.classList.add('text-blue-400');
+        } else {
+          titleEl.classList.remove('text-blue-400');
+        }
+      }
+      
+      // Update the button styling
+      var buttonEls = stepEl.querySelectorAll('button');
+      buttonEls.forEach(function(btn) {
+        if (btn.textContent.includes('Done') || btn.textContent.includes('Mark Done')) {
+          if (isCompleted) {
+            btn.classList.add('text-blue-400', 'bg-blue-500/10');
+            btn.innerHTML = '<svg class="w-4 h-4 mr-1 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>Done ✓';
+          } else {
+            btn.classList.remove('text-blue-400', 'bg-blue-500/10');
+            btn.innerHTML = '<svg class="w-4 h-4 mr-1 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>Mark Done';
+          }
+        }
+      });
+      
+      // Update the status icon
+      var iconContainer = stepEl.querySelector('.flex.items-center.gap-3');
+      if (iconContainer) {
+        var iconEl = iconContainer.children[0];
+        if (iconEl) {
+          if (isCompleted) {
+            iconEl.outerHTML = '<svg class="w-6 h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>';
+          } else {
+            iconEl.outerHTML = '<span class="w-7 h-7 rounded-full bg-primary-500/20 text-primary-400 font-bold text-sm flex items-center justify-center">' + (stepIndex + 1) + '</span>';
+          }
+        }
+      }
+    }
+    
+    // Update progress bar
+    var completedCount = steps.filter(function(s) { return s.completed; }).length;
+    var progressPercent = Math.round((completedCount / steps.length) * 100);
+    
+    var progressContainer = document.querySelector('.mb-4.p-4.bg-surface-800.rounded-lg');
+    if (progressContainer) {
+      var progressText = progressContainer.querySelector('.flex.items-center.justify-between span:first-child');
+      var progressPercentText = progressContainer.querySelector('.flex.items-center.justify-between .text-primary-400');
+      var progressBar = progressContainer.querySelector('.bg-gradient-to-r');
+      
+      if (progressText) progressText.textContent = 'Progress: ' + completedCount + ' / ' + steps.length + ' steps';
+      if (progressPercentText) progressPercentText.textContent = progressPercent + '%';
+      if (progressBar) progressBar.style.width = progressPercent + '%';
+    }
+    
+    // Update development progress slider if it exists
+    var devProgressSlider = document.getElementById('dev-progress-slider');
+    if (devProgressSlider) {
+      devProgressSlider.value = progressPercent;
+      updateDevProgressDisplay(progressPercent);
+    }
+    
+    // Save the development progress to database
+    if (AppState.currentProject) {
+      updateDevelopmentProgress(AppState.currentProject, progressPercent);
+      
+      // Save the completed steps state
+      var completedStepIndices = steps.map(function(step, index) {
+        return step.completed ? index : -1;
+      }).filter(function(index) { return index !== -1; });
+      
+      window.electronAPI.updateProject(AppState.currentProject.id, {
+        completedSteps: completedStepIndices
+      });
+    }
+  }
+}
+
+function toggleStepExpand(stepIndex) {
+  var contentEl = document.getElementById('step-content-' + stepIndex);
+  var iconEl = document.getElementById('expand-icon-' + stepIndex);
+  if (contentEl) {
+    if (contentEl.classList.contains('hidden')) {
+      contentEl.classList.remove('hidden');
+      iconEl.classList.add('rotate-180');
+    } else {
+      contentEl.classList.add('hidden');
+      iconEl.classList.remove('rotate-180');
+    }
+  }
+}
+
+async function runStepWithCodex(stepIndex) {
+  var steps = window.currentInstructionSteps || [];
+  if (stepIndex >= steps.length) {
+    showToast('Step not found', 'error');
+    return;
+  }
+  
+  var step = steps[stepIndex];
+  var stepNumber = stepIndex + 1;
+  var projectName = AppState.currentProject?.name || 'project';
+  
+  // Check if GitHub repo exists
+  var repoUrl = AppState.currentProject?.aiPlan?.githubRepoUrl;
+  if (!repoUrl) {
+    showToast('No GitHub repository linked. Please create one first.', 'warning');
+    return;
+  }
+  
+  // Build the step prompt
+  var stepPrompt = 'Step ' + stepNumber + ': ' + step.title + '\n\n' + step.content;
+  
+  showModal({
+    title: 'Run Step ' + stepNumber + ' with Codex',
+    message: '' +
+      '<div class="space-y-4">' +
+        '<p class="text-surface-300">This will execute <strong>Step ' + stepNumber + '</strong> using the Codex CLI with your connected GitHub repository.</p>' +
+        '<div class="bg-surface-800 rounded-lg p-3 max-h-40 overflow-y-auto">' +
+          '<p class="text-sm font-medium text-primary-400 mb-2">' + escapeHtml(step.title) + '</p>' +
+          '<p class="text-xs text-surface-400 font-mono">' + escapeHtml(step.content.substring(0, 200)) + (step.content.length > 200 ? '...' : '') + '</p>' +
+        '</div>' +
+        '<div class="flex items-center gap-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded">' +
+          '<svg class="w-5 h-5 text-blue-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>' +
+          '<p class="text-sm text-blue-300">Changes will be made to your local repository. You can review and commit them after.</p>' +
+        '</div>' +
+      '</div>',
+    buttons: [
+      { text: 'Cancel', class: 'btn-outline', onClick: closeModal },
+      { text: 'Run Step', class: 'btn-primary bg-pink-500 hover:bg-pink-600', onClick: async function() {
+        closeModal();
+        await executeStepWithCodex(stepIndex, stepPrompt);
+      }}
+    ]
+  });
+}
+
+async function executeStepWithCodex(stepIndex, prompt) {
+  var stepNumber = stepIndex + 1;
+  var projectName = AppState.currentProject?.name || 'project';
+  
+  // Get Codex settings
+  var settings = await window.electronAPI.getSettings();
+  var model = settings?.codex_default_model || 'gpt-5.1-codex';
+  
+  // Get project folder path - we'll use ~/Projects/{projectName} as default
+  var projectPath = settings?.projects_folder 
+    ? settings.projects_folder + '/' + projectName.toLowerCase().replace(/[^a-z0-9]/gi, '-')
+    : '~/Projects/' + projectName.toLowerCase().replace(/[^a-z0-9]/gi, '-');
+  
+  showLoading('Running Step ' + stepNumber + ' with Codex...');
+  
+  try {
+    var result = await window.electronAPI.runCodexBuild(prompt, model, projectPath);
+    hideLoading();
+    
+    if (result.success) {
+      // Mark step as complete
+      var steps = window.currentInstructionSteps || [];
+      if (stepIndex < steps.length) {
+        steps[stepIndex].completed = true;
+      }
+      
+      // Re-render instructions
+      var instructions = AppState.currentProject?.aiPlan?.agentInstructions || AppState.currentProject?.agentInstructions || '';
+      document.getElementById('step-instructions-view').innerHTML = renderStepByStepInstructions(instructions);
+      
+      showToast('Step ' + stepNumber + ' completed successfully!', 'success');
+      
+      // Show result modal with verification reminder
+      var step = steps[stepIndex];
+      var verificationMatch = step?.content.match(/\*\*Verification:\*\*\s*([^\n]+(?:\n(?!\*\*)[^\n]+)*)/i);
+      
+      showModal({
+        title: 'Step ' + stepNumber + ' Complete!',
+        message: '' +
+          '<div class="space-y-4">' +
+            '<div class="flex items-center gap-3 p-3 bg-green-500/10 border border-green-500/20 rounded">' +
+              '<svg class="w-6 h-6 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>' +
+              '<p class="text-green-300">Codex has completed this step.</p>' +
+            '</div>' +
+            (verificationMatch ? '' +
+              '<div class="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded">' +
+                '<p class="text-sm font-semibold text-yellow-400 mb-2">📋 Verification Checklist:</p>' +
+                '<p class="text-sm text-yellow-200">' + escapeHtml(verificationMatch[1].trim()) + '</p>' +
+              '</div>'
+            : '') +
+            '<p class="text-sm text-surface-400">Review the changes in your project folder and run any tests to verify this step works correctly.</p>' +
+          '</div>',
+        buttons: [
+          { text: 'View Output', class: 'btn-outline', onClick: function() {
+            closeModal();
+            // Could show terminal output here
+          }},
+          { text: 'Continue', class: 'btn-primary', onClick: closeModal }
+        ]
+      });
+    } else {
+      showToast('Codex error: ' + (result.error || 'Unknown error'), 'error');
+    }
+  } catch (err) {
+    hideLoading();
+    showToast('Error running step: ' + err.message, 'error');
+  }
+}
+
+function toggleInstructionView() {
+  var fullView = document.getElementById('full-instructions-view');
+  var stepView = document.getElementById('step-instructions-view');
+  var toggleText = document.getElementById('instruction-view-text');
+  
+  if (fullView.classList.contains('hidden')) {
+    fullView.classList.remove('hidden');
+    stepView.classList.add('hidden');
+    toggleText.textContent = 'Step-by-Step View';
+  } else {
+    fullView.classList.add('hidden');
+    stepView.classList.remove('hidden');
+    toggleText.textContent = 'Full View';
+  }
+}
+
+// ==================== GitHub Integration ====================
+function toggleGithubTokenVisibility() {
+  var input = document.getElementById('github-token');
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+
+async function validateGithubToken() {
+  var token = document.getElementById('github-token').value;
+  if (!token) {
+    showToast('Please enter a GitHub token', 'warning');
+    return;
+  }
+  
+  showLoading('Validating GitHub token...');
+  try {
+    var result = await window.electronAPI.validateGithubToken(token);
+    if (result.valid) {
+      showToast('GitHub token is valid! User: ' + result.user, 'success');
+    } else {
+      showToast('Invalid GitHub token: ' + (result.error || 'Unknown error'), 'error');
+    }
+  } catch (error) {
+    showToast('Validation failed: ' + error.message, 'error');
+  } finally {
+    hideLoading();
+  }
+}
+
+function showCreateGithubRepoModal() {
+  var project = AppState.currentProject;
+  if (!project) {
+    showToast('No project selected', 'error');
+    return;
+  }
+  
+  var settings = AppState.settings || {};
+  if (!settings.githubToken) {
+    showToast('Please configure GitHub token in Settings first', 'warning');
+    navigateTo('settings');
+    return;
+  }
+  
+  var repoName = project.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  
+  var modalContent = '' +
+    '<div class="space-y-4">' +
+      '<div class="bg-surface-800/50 rounded-lg p-4">' +
+        '<div class="flex items-center gap-2 mb-2">' +
+          '<svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>' +
+          '<span class="font-semibold">Create GitHub Repository</span>' +
+        '</div>' +
+        '<p class="text-sm text-surface-400">Create a new repository for your project and optionally connect it to Codex for live builds.</p>' +
+      '</div>' +
+      
+      '<div>' +
+        '<label class="label">Repository Name</label>' +
+        '<input type="text" id="github-repo-name" class="input" value="' + escapeHtml(repoName) + '">' +
+        '<p class="text-xs text-surface-400 mt-1">Lowercase letters, numbers, and hyphens only</p>' +
+      '</div>' +
+      
+      '<div>' +
+        '<label class="label">Description</label>' +
+        '<textarea id="github-repo-desc" class="input" rows="2">' + escapeHtml(project.appDescription || project.description || '') + '</textarea>' +
+      '</div>' +
+      
+      '<div>' +
+        '<label class="label">Visibility</label>' +
+        '<select id="github-repo-visibility" class="select">' +
+          '<option value="private"' + (settings.githubVisibility !== 'public' ? ' selected' : '') + '>Private</option>' +
+          '<option value="public"' + (settings.githubVisibility === 'public' ? ' selected' : '') + '>Public</option>' +
+        '</select>' +
+      '</div>' +
+      
+      '<div class="flex items-center gap-3 p-3 bg-surface-800/50 rounded-lg">' +
+        '<input type="checkbox" id="github-init-readme" class="checkbox" checked>' +
+        '<div>' +
+          '<label for="github-init-readme" class="font-medium cursor-pointer">Initialize with README</label>' +
+          '<p class="text-xs text-surface-400">Include project description and AI agent instructions</p>' +
+        '</div>' +
+      '</div>' +
+      
+      '<div class="flex items-center gap-3 p-3 bg-surface-800/50 rounded-lg">' +
+        '<input type="checkbox" id="github-add-instructions" class="checkbox" checked>' +
+        '<div>' +
+          '<label for="github-add-instructions" class="font-medium cursor-pointer">Add INSTRUCTIONS.md</label>' +
+          '<p class="text-xs text-surface-400">Include AI agent build instructions in a separate file</p>' +
+        '</div>' +
+      '</div>' +
+      
+      (settings.experimentalCodex ? 
+        '<div class="flex items-center gap-3 p-3 bg-gradient-to-r from-pink-500/10 to-purple-500/10 border border-pink-500/20 rounded-lg">' +
+          '<input type="checkbox" id="github-connect-codex" class="checkbox">' +
+          '<div>' +
+            '<label for="github-connect-codex" class="font-medium cursor-pointer">Connect to Codex</label>' +
+            '<p class="text-xs text-surface-400">Allow AI agent to make live changes to this repository</p>' +
+          '</div>' +
+        '</div>' : '') +
+      
+      '<div class="flex gap-3 pt-2">' +
+        '<button type="button" onclick="closeModal()" class="btn-secondary flex-1">Cancel</button>' +
+        '<button type="button" onclick="createGithubRepo()" class="btn-primary flex-1">' +
+          '<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>' +
+          'Create Repository' +
+        '</button>' +
+      '</div>' +
+    '</div>';
+  
+  showModal('Create GitHub Repository', modalContent, []);
+}
+
+async function createGithubRepo() {
+  var project = AppState.currentProject;
+  var repoName = document.getElementById('github-repo-name').value.trim();
+  var description = document.getElementById('github-repo-desc').value.trim();
+  var visibility = document.getElementById('github-repo-visibility').value;
+  var initReadme = document.getElementById('github-init-readme').checked;
+  var addInstructions = document.getElementById('github-add-instructions').checked;
+  var connectCodex = document.getElementById('github-connect-codex')?.checked || false;
+  
+  if (!repoName) {
+    showToast('Please enter a repository name', 'warning');
+    return;
+  }
+  
+  // Validate repo name
+  if (!/^[a-z0-9][a-z0-9-]*[a-z0-9]$|^[a-z0-9]$/.test(repoName)) {
+    showToast('Repository name must contain only lowercase letters, numbers, and hyphens', 'warning');
+    return;
+  }
+  
+  closeModal();
+  showLoading('Creating GitHub repository...');
+  
+  try {
+    var instructions = project.aiPlan?.agentInstructions || project.agentInstructions || '';
+    
+    var result = await window.electronAPI.createGithubRepo({
+      name: repoName,
+      description: description,
+      private: visibility === 'private',
+      initReadme: initReadme,
+      addInstructions: addInstructions,
+      instructions: instructions,
+      appName: project.name,
+      connectCodex: connectCodex
+    });
+    
+    if (result.success) {
+      // Update project with GitHub repo info
+      await window.electronAPI.updateProject(project.id, {
+        ...project,
+        githubRepo: result.repoUrl,
+        githubRepoName: result.repoName,
+        githubConnectedCodex: connectCodex
+      });
+      
+      // Refresh project
+      AppState.currentProject = await window.electronAPI.getProject(project.id);
+      
+      showToast('Repository created successfully!', 'success');
+      
+      // Show success modal with repo link
+      showModal('Repository Created! 🎉', '' +
+        '<div class="space-y-4">' +
+          '<div class="flex items-center gap-3 p-4 bg-green-500/10 border border-green-500/20 rounded-lg">' +
+            '<svg class="w-8 h-8 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>' +
+            '<div>' +
+              '<p class="font-semibold text-green-400">Repository Created!</p>' +
+              '<p class="text-sm text-surface-300">' + escapeHtml(result.repoName) + '</p>' +
+            '</div>' +
+          '</div>' +
+          '<div>' +
+            '<label class="label">Repository URL</label>' +
+            '<div class="flex gap-2">' +
+              '<input type="text" class="input flex-1" value="' + escapeHtml(result.repoUrl) + '" readonly>' +
+              '<button onclick="copyToClipboard(\'' + escapeJsString(result.repoUrl) + '\')" class="btn-secondary">Copy</button>' +
+            '</div>' +
+          '</div>' +
+          (result.cloneCommand ? 
+            '<div>' +
+              '<label class="label">Clone Command</label>' +
+              '<div class="flex gap-2">' +
+                '<input type="text" class="input flex-1 font-mono text-sm" value="' + escapeHtml(result.cloneCommand) + '" readonly>' +
+                '<button onclick="copyToClipboard(\'' + escapeJsString(result.cloneCommand) + '\')" class="btn-secondary">Copy</button>' +
+              '</div>' +
+            '</div>' : '') +
+          (connectCodex ? 
+            '<div class="p-4 bg-gradient-to-r from-pink-500/10 to-purple-500/10 border border-pink-500/20 rounded-lg">' +
+              '<p class="text-sm text-surface-300">' +
+                '<span class="text-pink-400 font-semibold">Codex Connected!</span> ' +
+                'You can now use "Build with Codex" to push changes directly to this repository.' +
+              '</p>' +
+            '</div>' : '') +
+          '<div class="flex gap-3">' +
+            '<button onclick="closeModal()" class="btn-secondary flex-1">Close</button>' +
+            '<a href="' + escapeHtml(result.repoUrl) + '" target="_blank" class="btn-primary flex-1 text-center">' +
+              'Open in GitHub' +
+            '</a>' +
+          '</div>' +
+        '</div>',
+        []
+      );
+    } else {
+      showToast('Failed to create repository: ' + result.error, 'error');
+    }
+  } catch (error) {
+    showToast('Error creating repository: ' + error.message, 'error');
+  } finally {
+    hideLoading();
+  }
+}
+
 // ==================== Codex Integration ====================
 async function buildWithCodex() {
   var project = AppState.currentProject;
@@ -5454,6 +6520,11 @@ async function buildWithCodex() {
     showToast('No agent instructions available. Generate an AI plan first.', 'warning');
     return;
   }
+  
+  var settings = AppState.settings || {};
+  var hasGithubRepo = project.githubRepo && project.githubRepoName;
+  var hasGithubToken = settings.githubToken;
+  var defaultModel = settings.codexDefaultModel || 'codex';
   
   // Show modal to configure Codex build
   var modalContent = '' +
@@ -5481,19 +6552,120 @@ async function buildWithCodex() {
       '</div>' +
       
       '<div>' +
-        '<label class="label">Codex Model</label>' +
+        '<label class="label">AI Model</label>' +
         '<select id="codex-model" class="select">' +
-          '<option value="codex" selected>Codex (Default)</option>' +
-          '<option value="o4-mini">o4-mini (Fast)</option>' +
-          '<option value="o3">o3 (Advanced)</option>' +
+          '<optgroup label="Codex Optimized (Local + Cloud)">' +
+            '<option value="gpt-5.1-codex-max"' + (defaultModel === 'gpt-5.1-codex-max' || defaultModel === 'gpt-5.2' ? ' selected' : '') + '>GPT-5.1 Codex Max (Most Intelligent)</option>' +
+            '<option value="gpt-5.1-codex"' + (defaultModel === 'gpt-5.1-codex' || defaultModel === 'gpt-5' || defaultModel === 'codex' || !defaultModel ? ' selected' : '') + '>GPT-5.1 Codex (Recommended)</option>' +
+            '<option value="gpt-5.1-codex-mini"' + (defaultModel === 'gpt-5.1-codex-mini' || defaultModel === 'gpt-5-mini' ? ' selected' : '') + '>GPT-5.1 Codex Mini (Fast)</option>' +
+            '<option value="gpt-5-codex"' + (defaultModel === 'gpt-5-codex' ? ' selected' : '') + '>GPT-5 Codex (Previous Gen)</option>' +
+          '</optgroup>' +
+          '<optgroup label="Frontier Models (Cloud Only)">' +
+            '<option value="gpt-5.2"' + (defaultModel === 'gpt-5.2-cloud' ? ' selected' : '') + '>GPT-5.2 (Best Overall)</option>' +
+            '<option value="gpt-5"' + (defaultModel === 'gpt-5-cloud' ? ' selected' : '') + '>GPT-5 (Reasoning + Coding)</option>' +
+            '<option value="gpt-5-mini"' + (defaultModel === 'gpt-5-mini-cloud' ? ' selected' : '') + '>GPT-5 Mini (Affordable)</option>' +
+            '<option value="gpt-5-nano"' + (defaultModel === 'gpt-5-nano' ? ' selected' : '') + '>GPT-5 Nano (Fastest)</option>' +
+          '</optgroup>' +
+          '<optgroup label="Reasoning Models (Cloud Only)">' +
+            '<option value="o3"' + (defaultModel === 'o3' ? ' selected' : '') + '>o3 (Complex Reasoning)</option>' +
+            '<option value="o4-mini"' + (defaultModel === 'o4-mini' ? ' selected' : '') + '>o4-mini (Fast Reasoning)</option>' +
+          '</optgroup>' +
+          '<optgroup label="GPT-4 Series (Legacy)">' +
+            '<option value="gpt-4.1"' + (defaultModel === 'gpt-4.1' ? ' selected' : '') + '>GPT-4.1 (Non-Reasoning)</option>' +
+            '<option value="gpt-4o"' + (defaultModel === 'gpt-4o' ? ' selected' : '') + '>GPT-4o</option>' +
+            '<option value="gpt-4o-mini"' + (defaultModel === 'gpt-4o-mini' ? ' selected' : '') + '>GPT-4o Mini</option>' +
+          '</optgroup>' +
         '</select>' +
+        '<p class="text-xs text-surface-400 mt-1">Codex models work with Local CLI. Other models use Cloud API.</p>' +
       '</div>' +
       
+      // Processing Mode Selection
+      '<div class="border border-surface-700 rounded-lg overflow-hidden">' +
+        '<div class="bg-surface-800/50 p-3 flex items-center gap-2">' +
+          '<svg class="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>' +
+          '<span class="font-semibold">Processing Mode</span>' +
+        '</div>' +
+        '<div class="p-3 space-y-3">' +
+          '<div class="flex items-center gap-3">' +
+            '<input type="radio" name="codex-mode" id="codex-mode-local" value="local" class="radio" checked>' +
+            '<label for="codex-mode-local" class="cursor-pointer flex-1">' +
+              '<span class="font-medium">Local (Codex CLI)</span>' +
+              '<p class="text-xs text-surface-400">Run Codex CLI locally on your machine</p>' +
+            '</label>' +
+          '</div>' +
+          '<div class="flex items-center gap-3">' +
+            '<input type="radio" name="codex-mode" id="codex-mode-cloud" value="cloud" class="radio" ' + (!hasGithubRepo ? 'disabled' : '') + '>' +
+            '<label for="codex-mode-cloud" class="cursor-pointer flex-1 ' + (!hasGithubRepo ? 'opacity-50' : '') + '">' +
+              '<span class="font-medium flex items-center gap-2">' +
+                'Cloud (OpenAI Plus)' +
+                '<span class="text-xs bg-gradient-to-r from-pink-500 to-purple-500 text-white px-2 py-0.5 rounded-full">Pro</span>' +
+              '</span>' +
+              '<p class="text-xs text-surface-400">' + (hasGithubRepo ? 'Process in OpenAI\'s cloud with your GitHub repo' : 'Requires a connected GitHub repository') + '</p>' +
+            '</label>' +
+          '</div>' +
+          '<div id="cloud-options" class="hidden ml-6 mt-2 p-3 bg-surface-900 rounded-lg space-y-3">' +
+            '<p class="text-xs text-surface-300">The cloud will clone your GitHub repo and apply changes directly.</p>' +
+            '<div class="flex items-center gap-3">' +
+              '<input type="checkbox" id="codex-cloud-auto-commit" class="checkbox" checked>' +
+              '<label for="codex-cloud-auto-commit" class="cursor-pointer text-sm">' +
+                'Auto-commit changes to GitHub' +
+              '</label>' +
+            '</div>' +
+            '<div class="flex items-center gap-3">' +
+              '<input type="checkbox" id="codex-cloud-create-pr" class="checkbox">' +
+              '<label for="codex-cloud-create-pr" class="cursor-pointer text-sm">' +
+                'Create pull request instead of direct commit' +
+              '</label>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      
+      // GitHub Integration Section
+      (hasGithubToken ? 
+        '<div class="border border-surface-700 rounded-lg overflow-hidden">' +
+          '<div class="bg-surface-800/50 p-3 flex items-center gap-2">' +
+            '<svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>' +
+            '<span class="font-semibold">GitHub Integration</span>' +
+          '</div>' +
+          '<div class="p-3 space-y-3">' +
+            (hasGithubRepo ?
+              '<div class="flex items-center gap-2 p-2 bg-green-500/10 border border-green-500/20 rounded">' +
+                '<svg class="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>' +
+                '<span class="text-sm text-green-400">Connected to: ' + escapeHtml(project.githubRepoName) + '</span>' +
+              '</div>' +
+              '<div class="flex items-center gap-3">' +
+                '<input type="checkbox" id="codex-push-github" class="checkbox" ' + (settings.liveCodexSync ? 'checked' : '') + '>' +
+                '<label for="codex-push-github" class="cursor-pointer">' +
+                  '<span class="font-medium">Push changes to GitHub</span>' +
+                  '<p class="text-xs text-surface-400">Automatically commit and push to repository after build</p>' +
+                '</label>' +
+              '</div>'
+            :
+              '<div class="flex items-center justify-between">' +
+                '<div>' +
+                  '<span class="text-sm text-surface-300">No repository connected</span>' +
+                  '<p class="text-xs text-surface-400">Create a GitHub repo to enable live sync</p>' +
+                '</div>' +
+                '<button type="button" onclick="closeModal(); showCreateGithubRepoModal();" class="btn-secondary text-sm">Create Repo</button>' +
+              '</div>'
+            ) +
+          '</div>' +
+        '</div>' : '') +
+      
       '<div class="bg-surface-800 rounded-lg p-4">' +
-        '<label class="label mb-2">Instructions <span class="text-surface-400 font-normal">(Editable)</span></label>' +
-        '<textarea id="codex-instructions" class="input font-mono text-sm h-64 overflow-y-auto resize-y" style="min-height: 200px; max-height: 400px;">' +
-          escapeHtml(instructions) +
-        '</textarea>' +
+        '<div class="flex items-center justify-between mb-2">' +
+          '<label class="label mb-0">Instructions <span class="text-surface-400 font-normal">(Editable)</span></label>' +
+          '<button type="button" onclick="toggleCodexInstructionsView()" class="btn-ghost text-xs">Toggle Step View</button>' +
+        '</div>' +
+        '<div id="codex-instructions-full">' +
+          '<textarea id="codex-instructions" class="input font-mono text-sm h-64 overflow-y-auto resize-y" style="min-height: 200px; max-height: 400px;">' +
+            escapeHtml(instructions) +
+          '</textarea>' +
+        '</div>' +
+        '<div id="codex-instructions-steps" class="hidden max-h-96 overflow-y-auto">' +
+          renderCodexStepInstructions(instructions) +
+        '</div>' +
         '<p class="text-xs text-surface-400 mt-1">Review and edit the instructions that will be sent to Codex</p>' +
       '</div>' +
       
@@ -5522,6 +6694,83 @@ async function buildWithCodex() {
     modalContent,
     []
   );
+  
+  // Add event listener for processing mode toggle
+  setTimeout(function() {
+    var cloudRadio = document.getElementById('codex-mode-cloud');
+    var localRadio = document.getElementById('codex-mode-local');
+    var cloudOptions = document.getElementById('cloud-options');
+    var outputDirSection = document.querySelector('#codex-output-dir')?.closest('div')?.parentElement;
+    
+    if (cloudRadio && localRadio && cloudOptions) {
+      cloudRadio.addEventListener('change', function() {
+        if (this.checked) {
+          cloudOptions.classList.remove('hidden');
+          if (outputDirSection) outputDirSection.classList.add('hidden');
+        }
+      });
+      localRadio.addEventListener('change', function() {
+        if (this.checked) {
+          cloudOptions.classList.add('hidden');
+          if (outputDirSection) outputDirSection.classList.remove('hidden');
+        }
+      });
+    }
+  }, 100);
+}
+
+function renderCodexStepInstructions(instructions) {
+  var steps = parseInstructionsToSteps(instructions);
+  
+  if (steps.length === 0) {
+    return '<p class="text-surface-400 text-center py-4">No structured steps found</p>';
+  }
+  
+  var html = '<div class="space-y-3">';
+  steps.forEach(function(step, index) {
+    html += '' +
+      '<div class="bg-surface-900 rounded-lg p-3 border border-surface-700">' +
+        '<div class="flex items-center justify-between mb-2">' +
+          '<div class="flex items-center gap-2">' +
+            '<span class="w-6 h-6 rounded-full bg-primary-500/20 text-primary-400 font-bold text-xs flex items-center justify-center">' + (index + 1) + '</span>' +
+            '<span class="font-medium text-sm">' + escapeHtml(step.title) + '</span>' +
+          '</div>' +
+          '<button onclick="copyCodexStep(' + index + ')" class="btn-ghost text-xs px-2 py-1">' +
+            '<svg class="w-3 h-3 mr-1 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>' +
+            'Copy' +
+          '</button>' +
+        '</div>' +
+        '<div class="text-xs text-surface-400 font-mono whitespace-pre-wrap max-h-24 overflow-y-auto">' +
+          escapeHtml(step.content.substring(0, 300)) + (step.content.length > 300 ? '...' : '') +
+        '</div>' +
+      '</div>';
+  });
+  html += '</div>';
+  
+  // Store for copying
+  window.codexSteps = steps;
+  return html;
+}
+
+function toggleCodexInstructionsView() {
+  var fullView = document.getElementById('codex-instructions-full');
+  var stepView = document.getElementById('codex-instructions-steps');
+  
+  if (fullView.classList.contains('hidden')) {
+    fullView.classList.remove('hidden');
+    stepView.classList.add('hidden');
+  } else {
+    fullView.classList.add('hidden');
+    stepView.classList.remove('hidden');
+  }
+}
+
+function copyCodexStep(index) {
+  var steps = window.codexSteps || [];
+  if (index < steps.length) {
+    var step = steps[index];
+    copyToClipboard('## ' + step.title + '\n\n' + step.content);
+  }
 }
 
 async function selectCodexOutputDir() {
@@ -5542,7 +6791,40 @@ async function startCodexBuild() {
   var projectName = document.getElementById('codex-project-name').value;
   var model = document.getElementById('codex-model').value;
   var instructions = document.getElementById('codex-instructions').value;
+  var pushToGithub = document.getElementById('codex-push-github')?.checked || false;
+  var processingMode = document.querySelector('input[name="codex-mode"]:checked')?.value || 'local';
+  var cloudAutoCommit = document.getElementById('codex-cloud-auto-commit')?.checked || false;
+  var cloudCreatePR = document.getElementById('codex-cloud-create-pr')?.checked || false;
   
+  var project = AppState.currentProject;
+  
+  // Cloud mode validation
+  if (processingMode === 'cloud') {
+    if (!project.githubRepo || !project.githubRepoName) {
+      showToast('Cloud mode requires a connected GitHub repository', 'warning');
+      return;
+    }
+    if (!instructions || instructions.trim().length === 0) {
+      showToast('Instructions cannot be empty', 'warning');
+      return;
+    }
+    
+    closeModal();
+    await startCloudCodexBuild({
+      projectName: projectName,
+      model: model,
+      instructions: instructions,
+      githubRepo: project.githubRepo,
+      githubRepoName: project.githubRepoName,
+      autoCommit: cloudAutoCommit,
+      createPR: cloudCreatePR,
+      appName: project.name,
+      appDescription: project.appDescription
+    });
+    return;
+  }
+  
+  // Local mode validation
   if (!outputDir) {
     showToast('Please select an output directory', 'warning');
     return;
@@ -5559,8 +6841,6 @@ async function startCodexBuild() {
   }
   
   closeModal();
-  
-  var project = AppState.currentProject;
   
   // Show streaming output modal
   showCodexStreamingModal(projectName, model);
@@ -5589,21 +6869,134 @@ async function startCodexBuild() {
       } else {
         appendCodexOutput('\n\n✅ Build completed successfully!');
       }
-      showCodexComplete(true, result.projectDir);
+      
+      // Push to GitHub if requested
+      if (pushToGithub && project.githubRepo) {
+        appendCodexOutput('\n\n📤 Pushing changes to GitHub...');
+        try {
+          var pushResult = await window.electronAPI.pushToGithub({
+            projectDir: result.projectDir,
+            repoUrl: project.githubRepo,
+            message: 'Build update from Codex - ' + new Date().toISOString()
+          });
+          
+          if (pushResult.success) {
+            appendCodexOutput('\n✅ Successfully pushed to GitHub!');
+          } else {
+            appendCodexOutput('\n⚠️ Failed to push: ' + pushResult.error);
+          }
+        } catch (pushError) {
+          appendCodexOutput('\n⚠️ Push error: ' + pushError.message);
+        }
+      }
+      
+      showCodexComplete(true, result.projectDir, pushToGithub && project.githubRepo);
     } else {
       appendCodexOutput('\n\n❌ Error: ' + result.error);
-      showCodexComplete(false, null);
+      showCodexComplete(false, null, false);
     }
   } catch (error) {
     console.error('Codex build error:', error);
     appendCodexOutput('\n\n❌ Error: ' + error.message);
-    showCodexComplete(false, null);
+    showCodexComplete(false, null, false);
   } finally {
     if (codexProgressListener) {
       codexProgressListener();
       codexProgressListener = null;
     }
   }
+}
+
+// Cloud Codex Build Function
+async function startCloudCodexBuild(config) {
+  // Show cloud streaming modal
+  showCloudCodexStreamingModal(config.projectName, config.model, config.githubRepoName);
+  
+  // Set up progress listener for real-time streaming
+  if (codexProgressListener) {
+    codexProgressListener(); // Remove old listener
+  }
+  codexProgressListener = window.electronAPI.on('codex:progress', function(data) {
+    appendCodexOutput(data);
+  });
+  
+  try {
+    var result = await window.electronAPI.runCloudCodexBuild({
+      projectName: config.projectName,
+      model: config.model,
+      instructions: config.instructions,
+      githubRepo: config.githubRepo,
+      githubRepoName: config.githubRepoName,
+      autoCommit: config.autoCommit,
+      createPR: config.createPR,
+      appName: config.appName,
+      appDescription: config.appDescription
+    });
+    
+    if (result.success) {
+      appendCodexOutput('\n\n✅ Cloud build completed successfully!');
+      if (result.prUrl) {
+        appendCodexOutput('\n📝 Pull Request: ' + result.prUrl);
+      }
+      if (result.commitUrl) {
+        appendCodexOutput('\n📦 Commit: ' + result.commitUrl);
+      }
+      showCodexComplete(true, null, true, result.prUrl || result.commitUrl);
+    } else {
+      appendCodexOutput('\n\n❌ Error: ' + result.error);
+      showCodexComplete(false, null, false);
+    }
+  } catch (error) {
+    console.error('Cloud Codex build error:', error);
+    appendCodexOutput('\n\n❌ Error: ' + error.message);
+    showCodexComplete(false, null, false);
+  } finally {
+    if (codexProgressListener) {
+      codexProgressListener();
+      codexProgressListener = null;
+    }
+  }
+}
+
+function showCloudCodexStreamingModal(projectName, model, repoName) {
+  var modalContent = '' +
+    '<div class="space-y-4">' +
+      '<div class="flex items-center gap-3 mb-4">' +
+        '<div class="animate-spin rounded-full h-6 w-6 border-2 border-blue-500 border-t-transparent" id="codex-spinner"></div>' +
+        '<span class="text-lg font-semibold">Cloud Building <span class="text-blue-400">' + escapeHtml(projectName) + '</span>...</span>' +
+      '</div>' +
+      
+      '<div class="flex items-center gap-2 p-2 bg-blue-500/10 border border-blue-500/20 rounded mb-2">' +
+        '<svg class="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>' +
+        '<span class="text-sm text-blue-400">Processing with GitHub: ' + escapeHtml(repoName) + '</span>' +
+      '</div>' +
+      
+      '<div class="bg-surface-900 rounded-lg border border-surface-700">' +
+        '<div class="flex items-center gap-2 px-4 py-2 border-b border-surface-700 bg-surface-800 rounded-t-lg">' +
+          '<div class="flex gap-1.5">' +
+            '<div class="w-3 h-3 rounded-full bg-red-500"></div>' +
+            '<div class="w-3 h-3 rounded-full bg-yellow-500"></div>' +
+            '<div class="w-3 h-3 rounded-full bg-green-500"></div>' +
+          '</div>' +
+          '<span class="text-sm text-surface-400 ml-2">OpenAI Cloud Output</span>' +
+        '</div>' +
+        '<div id="codex-output" class="p-4 font-mono text-sm text-green-400 h-96 overflow-y-auto whitespace-pre-wrap" style="background: #0d1117;">' +
+          '<span class="text-surface-500">☁️ OpenAI Cloud - Model: ' + escapeHtml(model || 'codex') + '</span>\n' +
+          '<span class="text-blue-400">Connecting to OpenAI Responses API...</span>\n' +
+          '<span class="text-blue-400">Repository: ' + escapeHtml(repoName) + '</span>\n\n' +
+        '</div>' +
+      '</div>' +
+      
+      '<div id="codex-status" class="text-center text-surface-400">' +
+        '<span class="animate-pulse">☁️ Processing in OpenAI Cloud. This may take several minutes...</span>' +
+      '</div>' +
+      
+      '<div id="codex-actions" class="hidden">' +
+        '<button type="button" onclick="closeModal()" class="btn-primary w-full bg-gradient-to-r from-blue-500 to-purple-500">Close</button>' +
+      '</div>' +
+    '</div>';
+  
+  showModal('☁️ Cloud Build with OpenAI', modalContent, []);
 }
 
 function showCodexStreamingModal(projectName, model) {
@@ -5649,7 +7042,7 @@ function appendCodexOutput(text) {
   }
 }
 
-function showCodexComplete(success, projectDir) {
+function showCodexComplete(success, projectDir, pushedToGithub, cloudUrl) {
   var spinnerEl = document.getElementById('codex-spinner');
   var statusEl = document.getElementById('codex-status');
   var actionsEl = document.getElementById('codex-actions');
@@ -5662,8 +7055,17 @@ function showCodexComplete(success, projectDir) {
   
   if (statusEl) {
     if (success) {
-      statusEl.innerHTML = '<span class="text-green-400">✅ Build complete!</span>' + 
-        (projectDir ? '<br><span class="text-sm text-surface-400">Project created at: ' + escapeHtml(projectDir) + '</span>' : '');
+      var statusHtml = '<span class="text-green-400">✅ Build complete!</span>';
+      if (projectDir) {
+        statusHtml += '<br><span class="text-sm text-surface-400">Project created at: ' + escapeHtml(projectDir) + '</span>';
+      }
+      if (pushedToGithub) {
+        statusHtml += '<br><span class="text-sm text-primary-400">📤 Changes pushed to GitHub</span>';
+      }
+      if (cloudUrl) {
+        statusHtml += '<br><a href="' + escapeHtml(cloudUrl) + '" target="_blank" class="text-sm text-blue-400 hover:underline">🔗 View changes on GitHub</a>';
+      }
+      statusEl.innerHTML = statusHtml;
     } else {
       statusEl.innerHTML = '<span class="text-red-400">❌ Build failed. Check the output above for details.</span>';
     }
@@ -5671,5 +7073,20 @@ function showCodexComplete(success, projectDir) {
   
   if (actionsEl) {
     actionsEl.classList.remove('hidden');
+    
+    // Add GitHub link if repo exists or cloud URL provided
+    var githubUrl = cloudUrl || AppState.currentProject?.githubRepo;
+    if (success && githubUrl) {
+      actionsEl.innerHTML = '' +
+        '<div class="flex gap-3">' +
+          '<button type="button" onclick="closeModal()" class="btn-secondary flex-1">Close</button>' +
+          '<a href="' + escapeHtml(githubUrl) + '" target="_blank" class="btn-primary flex-1 text-center bg-gradient-to-r from-pink-500 to-purple-500">' +
+            '<svg class="w-4 h-4 mr-2 inline" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>' +
+            'View on GitHub' +
+          '</a>' +
+        '</div>';
+    } else {
+      actionsEl.innerHTML = '<button type="button" onclick="closeModal()" class="btn-primary w-full bg-gradient-to-r from-pink-500 to-purple-500">Close</button>';
+    }
   }
 }
