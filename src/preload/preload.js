@@ -53,6 +53,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   selectVideo: () => ipcRenderer.invoke('file:selectVideo'),
   selectDirectory: () => ipcRenderer.invoke('file:selectDirectory'),
   saveFile: (filename, content) => ipcRenderer.invoke('file:saveFile', filename, content),
+  saveProjectFile: (filename, content) => ipcRenderer.invoke('file:saveProjectFile', filename, content),
+  openProjectFile: () => ipcRenderer.invoke('file:openProjectFile'),
   saveFileHtml: (filename, content) => ipcRenderer.invoke('file:saveFileHtml', filename, content),
   openFile: (filePath) => ipcRenderer.invoke('file:openFile', filePath),
 

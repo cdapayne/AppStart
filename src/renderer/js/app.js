@@ -474,6 +474,10 @@ async function renderDashboard(container) {
       '<div class="mb-6 flex items-center justify-between">' +
         '<h3 class="text-xl font-semibold">Your Projects</h3>' +
         '<div class="flex items-center gap-2">' +
+          '<button onclick="importProjectFile()" class="btn-secondary">' +
+            '<svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4a2 2 0 012-2h6a2 2 0 012 2v12m-4-4l-3 3m0 0l3 3m-3-3h12" /></svg>' +
+            'Import Project' +
+          '</button>' +
           '<input type="text" id="project-search" placeholder="Search projects..." ' +
             'class="input w-64" oninput="filterProjects(this.value)">' +
         '</div>' +
@@ -967,6 +971,10 @@ function renderProjectView(container, project) {
               '<svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>' +
               'Edit' +
             '</button>' +
+            '<button onclick="exportCurrentProject()" class="btn-secondary">' +
+              '<svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m-9 7h12a2 2 0 002-2V7a2 2 0 00-2-2h-3m-4 0H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>' +
+              'Export .az' +
+            '</button>' +
           '</div>' +
         '</div>' +
         
@@ -1120,6 +1128,146 @@ function renderProjectView(container, project) {
   
   // Load and display live store links
   loadLiveStoreLinks(project.id);
+}
+
+function getProjectExportFilename(projectName) {
+  var baseName = (projectName || 'project')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+  if (!baseName) {
+    baseName = 'project';
+  }
+  return baseName + '.az';
+}
+
+function buildProjectExportData(project, storeSubmissions) {
+  return {
+    format: 'appstart-project',
+    formatVersion: 1,
+    exportedAt: new Date().toISOString(),
+    project: project,
+    storeSubmissions: storeSubmissions || []
+  };
+}
+
+async function exportCurrentProject() {
+  var project = AppState.currentProject;
+  if (!project) {
+    showToast('No project selected', 'error');
+    return;
+  }
+  
+  showLoading('Preparing export...');
+  
+  try {
+    var submissions = await window.electronAPI.getStoreSubmissions(project.id);
+    var exportData = buildProjectExportData(project, submissions);
+    var filename = getProjectExportFilename(project.name);
+    var savedPath = await window.electronAPI.saveProjectFile(filename, JSON.stringify(exportData, null, 2));
+    if (savedPath) {
+      showToast('Project exported!', 'success');
+    }
+  } catch (error) {
+    showToast('Export failed: ' + error.message, 'error');
+  } finally {
+    hideLoading();
+  }
+}
+
+async function importProjectFile() {
+  showLoading('Importing project...');
+  
+  try {
+    var result = await window.electronAPI.openProjectFile();
+    if (!result || !result.content) {
+      return;
+    }
+    
+    var data = null;
+    try {
+      data = JSON.parse(result.content);
+    } catch (error) {
+      showToast('Invalid project file: ' + error.message, 'error');
+      return;
+    }
+    
+    var projectData = data.project || data;
+    if (!projectData || !projectData.name) {
+      showToast('Project file is missing required data', 'error');
+      return;
+    }
+    
+    var created = await window.electronAPI.createProject({
+      name: projectData.name,
+      description: projectData.description || '',
+      targetMarkets: projectData.targetMarkets || [],
+      ageRangeMin: projectData.ageRangeMin || 0,
+      ageRangeMax: projectData.ageRangeMax || 99,
+      category: projectData.category || '',
+      subcategory: projectData.subcategory || '',
+      monetization: projectData.monetization || 'free',
+      appDescription: projectData.appDescription || ''
+    });
+    
+    var updated = await window.electronAPI.updateProject(created.id, {
+      status: projectData.status,
+      aiPlan: projectData.aiPlan,
+      agentInstructions: projectData.agentInstructions,
+      checklist: projectData.checklist,
+      adjustments: projectData.adjustments,
+      currentStep: projectData.currentStep,
+      iconPath: projectData.iconPath,
+      marketingData: projectData.marketingData,
+      pitch: projectData.pitch,
+      projectTechStack: projectData.projectTechStack,
+      developmentProgress: projectData.developmentProgress,
+      completedSteps: projectData.completedSteps,
+      githubRepo: projectData.githubRepo,
+      githubRepoName: projectData.githubRepoName,
+      githubConnectedCodex: projectData.githubConnectedCodex
+    });
+    
+    var storeSubmissions = data.storeSubmissions || [];
+    for (var i = 0; i < storeSubmissions.length; i++) {
+      var submission = storeSubmissions[i];
+      if (!submission || !submission.storeType) {
+        continue;
+      }
+      
+      var createdSubmission = await window.electronAPI.createStoreSubmission(updated.id, submission.storeType);
+      await window.electronAPI.updateStoreSubmission(createdSubmission.id, {
+        appName: submission.appName,
+        category: submission.category,
+        keywords: submission.keywords,
+        shortDescription: submission.shortDescription,
+        longDescription: submission.longDescription,
+        tagline: submission.tagline,
+        privacyPolicyUrl: submission.privacyPolicyUrl,
+        supportUrl: submission.supportUrl,
+        marketingUrl: submission.marketingUrl,
+        iconPath: submission.iconPath,
+        screenshots: submission.screenshots,
+        phoneScreenshots: submission.phoneScreenshots,
+        tabletScreenshots: submission.tabletScreenshots,
+        promoVideoPath: submission.promoVideoPath,
+        featureGraphicPath: submission.featureGraphicPath,
+        status: submission.status,
+        metadata: submission.metadata,
+        liveStoreUrl: submission.liveStoreUrl,
+        translations: submission.translations
+      });
+    }
+    
+    await loadProjects();
+    AppState.currentProject = updated;
+    showToast('Project imported!', 'success');
+    navigateTo('project-view', updated);
+  } catch (error) {
+    showToast('Import failed: ' + error.message, 'error');
+  } finally {
+    hideLoading();
+  }
 }
 
 // Load live store links for the project overview

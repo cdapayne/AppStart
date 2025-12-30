@@ -1153,6 +1153,43 @@ ipcMain.handle('file:saveFile', async (event, filename, content) => {
   return null;
 });
 
+ipcMain.handle('file:saveProjectFile', async (event, filename, content) => {
+  const result = await dialog.showSaveDialog(mainWindow, {
+    defaultPath: filename,
+    filters: [
+      { name: 'AppStart Project', extensions: ['az'] },
+      { name: 'JSON', extensions: ['json'] },
+      { name: 'All Files', extensions: ['*'] }
+    ]
+  });
+  
+  if (!result.canceled && result.filePath) {
+    const fs = require('fs');
+    fs.writeFileSync(result.filePath, content, 'utf-8');
+    return result.filePath;
+  }
+  return null;
+});
+
+ipcMain.handle('file:openProjectFile', async () => {
+  const result = await dialog.showOpenDialog(mainWindow, {
+    properties: ['openFile'],
+    filters: [
+      { name: 'AppStart Project', extensions: ['az'] },
+      { name: 'JSON', extensions: ['json'] },
+      { name: 'All Files', extensions: ['*'] }
+    ]
+  });
+  
+  if (!result.canceled && result.filePaths.length > 0) {
+    const fs = require('fs');
+    const filePath = result.filePaths[0];
+    const content = fs.readFileSync(filePath, 'utf-8');
+    return { filePath, content };
+  }
+  return null;
+});
+
 ipcMain.handle('file:saveFileHtml', async (event, filename, content) => {
   const result = await dialog.showSaveDialog(mainWindow, {
     defaultPath: filename,
