@@ -1,20 +1,88 @@
 {
-  "name": "appstart",
+  "name": "app-creator-a-to-z",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "A cutting-edge state of the art app designer and creator powered by AI",
+  "main": "src/main/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron .",
+    "dev": "NODE_ENV=development electron .",
+    "build:css": "tailwindcss -i ./src/renderer/styles/input.css -o ./src/renderer/styles/output.css --minify",
+    "watch:css": "tailwindcss -i ./src/renderer/styles/input.css -o ./src/renderer/styles/output.css --watch",
+    "build:icons": "node scripts/convert-icons.js",
+    "build": "npm run build:icons && npm run build:css && electron-builder",
+    "build:win": "npm run build:icons && npm run build:css && electron-builder --win",
+    "build:mac": "npm run build:icons && npm run build:css && electron-builder --mac",
+    "build:linux": "npm run build:icons && npm run build:css && electron-builder --linux",
+    "build:all": "npm run build:icons && npm run build:css && electron-builder --win --mac --linux",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cdapayne/AppStart.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "electron",
+    "app-creator",
+    "ai",
+    "openai",
+    "desktop-app",
+    "cross-platform"
+  ],
+  "author": "App Creator A to Z Team",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/cdapayne/AppStart/issues"
   },
   "homepage": "https://github.com/cdapayne/AppStart#readme",
-  "description": ""
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1",
+    "jest": "^29.7.0",
+    "tailwindcss": "^3.4.0"
+  },
+  "dependencies": {
+    "better-sqlite3": "^9.2.2",
+    "openai": "^4.24.0",
+    "sharp": "^0.33.5",
+    "uuid": "^9.0.1"
+  },
+  "build": {
+    "appId": "com.appcreatoratoz.app",
+    "productName": "App Creator A to Z",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "src/assets/icon.ico"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "src/assets/icon.icns",
+      "category": "public.app-category.developer-tools"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm"
+      ],
+      "icon": "src/assets/icon.png",
+      "category": "Development"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
 }
